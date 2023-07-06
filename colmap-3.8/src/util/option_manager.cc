@@ -189,6 +189,9 @@ void OptionManager::AddAllOptions() {
   AddRenderOptions();
 }
 
+static int FLAGS_logtostderr = 0;
+static int FLAGS_v = 0;
+
 void OptionManager::AddLogOptions() {
   if (added_log_options_) {
     return;
