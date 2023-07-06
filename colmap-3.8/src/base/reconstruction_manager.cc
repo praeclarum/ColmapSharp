@@ -97,7 +97,7 @@ void ReconstructionManager::Write(const std::string& path,
     CreateDirIfNotExists(reconstruction_path);
     reconstructions_[recon_sizes[i].first]->Write(reconstruction_path);
     if (options != nullptr) {
-      options->Write(JoinPaths(reconstruction_path, "project.ini"));
+      // options->Write(JoinPaths(reconstruction_path, "project.ini"));
     }
   }
 }
