@@ -1,4 +1,4 @@
-SRC=$(wildcard colmap-3.8/src/base/*.cc)
+SRC=$(filter-out %/warp.cc, $(filter-out %/line.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc))))
 
 CC=clang++
 CFLAGS=-std=c++14 -fpic -Icolmap-3.8/src -Ieigen-3.3.7 -Iceres-solver-2.1.0/include
