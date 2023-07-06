@@ -58,8 +58,8 @@ OptionManager::OptionManager(bool add_project_options) {
   image_path = std::make_shared<std::string>();
 
   image_reader = std::make_shared<ImageReaderOptions>();
-  sift_extraction = std::make_shared<SiftExtractionOptions>();
-  sift_matching = std::make_shared<SiftMatchingOptions>();
+  // sift_extraction = std::make_shared<SiftExtractionOptions>();
+  // sift_matching = std::make_shared<SiftMatchingOptions>();
   exhaustive_matching = std::make_shared<ExhaustiveMatchingOptions>();
   sequential_matching = std::make_shared<SequentialMatchingOptions>();
   vocab_tree_matching = std::make_shared<VocabTreeMatchingOptions>();
@@ -109,7 +109,7 @@ void OptionManager::ModifyForInternetData() {
 }
 
 void OptionManager::ModifyForLowQuality() {
-  sift_extraction->max_image_size = 1000;
+  // sift_extraction->max_image_size = 1000;
   sequential_matching->loop_detection_num_images /= 2;
   vocab_tree_matching->num_images /= 2;
   mapper->ba_local_max_num_iterations /= 2;
@@ -128,7 +128,7 @@ void OptionManager::ModifyForLowQuality() {
 }
 
 void OptionManager::ModifyForMediumQuality() {
-  sift_extraction->max_image_size = 1600;
+  // sift_extraction->max_image_size = 1600;
   sequential_matching->loop_detection_num_images /= 1.5;
   vocab_tree_matching->num_images /= 1.5;
   mapper->ba_local_max_num_iterations /= 1.5;
@@ -147,9 +147,9 @@ void OptionManager::ModifyForMediumQuality() {
 }
 
 void OptionManager::ModifyForHighQuality() {
-  sift_extraction->estimate_affine_shape = true;
-  sift_extraction->max_image_size = 2400;
-  sift_matching->guided_matching = true;
+  // sift_extraction->estimate_affine_shape = true;
+  // sift_extraction->max_image_size = 2400;
+  // sift_matching->guided_matching = true;
   mapper->ba_local_max_num_iterations = 30;
   mapper->ba_local_max_refinements = 3;
   mapper->ba_global_max_num_iterations = 75;
@@ -159,9 +159,9 @@ void OptionManager::ModifyForHighQuality() {
 
 void OptionManager::ModifyForExtremeQuality() {
   // Most of the options are set to extreme quality by default.
-  sift_extraction->estimate_affine_shape = true;
-  sift_extraction->domain_size_pooling = true;
-  sift_matching->guided_matching = true;
+  // sift_extraction->estimate_affine_shape = true;
+  // sift_extraction->domain_size_pooling = true;
+  // sift_matching->guided_matching = true;
   mapper->ba_local_max_num_iterations = 40;
   mapper->ba_local_max_refinements = 3;
   mapper->ba_global_max_num_iterations = 100;
@@ -254,40 +254,40 @@ void OptionManager::AddExtractionOptions() {
   AddAndRegisterDefaultOption("ImageReader.camera_mask_path",
                               &image_reader->camera_mask_path);
 
-  AddAndRegisterDefaultOption("SiftExtraction.num_threads",
-                              &sift_extraction->num_threads);
-  AddAndRegisterDefaultOption("SiftExtraction.use_gpu",
-                              &sift_extraction->use_gpu);
-  AddAndRegisterDefaultOption("SiftExtraction.gpu_index",
-                              &sift_extraction->gpu_index);
-  AddAndRegisterDefaultOption("SiftExtraction.max_image_size",
-                              &sift_extraction->max_image_size);
-  AddAndRegisterDefaultOption("SiftExtraction.max_num_features",
-                              &sift_extraction->max_num_features);
-  AddAndRegisterDefaultOption("SiftExtraction.first_octave",
-                              &sift_extraction->first_octave);
-  AddAndRegisterDefaultOption("SiftExtraction.num_octaves",
-                              &sift_extraction->num_octaves);
-  AddAndRegisterDefaultOption("SiftExtraction.octave_resolution",
-                              &sift_extraction->octave_resolution);
-  AddAndRegisterDefaultOption("SiftExtraction.peak_threshold",
-                              &sift_extraction->peak_threshold);
-  AddAndRegisterDefaultOption("SiftExtraction.edge_threshold",
-                              &sift_extraction->edge_threshold);
-  AddAndRegisterDefaultOption("SiftExtraction.estimate_affine_shape",
-                              &sift_extraction->estimate_affine_shape);
-  AddAndRegisterDefaultOption("SiftExtraction.max_num_orientations",
-                              &sift_extraction->max_num_orientations);
-  AddAndRegisterDefaultOption("SiftExtraction.upright",
-                              &sift_extraction->upright);
-  AddAndRegisterDefaultOption("SiftExtraction.domain_size_pooling",
-                              &sift_extraction->domain_size_pooling);
-  AddAndRegisterDefaultOption("SiftExtraction.dsp_min_scale",
-                              &sift_extraction->dsp_min_scale);
-  AddAndRegisterDefaultOption("SiftExtraction.dsp_max_scale",
-                              &sift_extraction->dsp_max_scale);
-  AddAndRegisterDefaultOption("SiftExtraction.dsp_num_scales",
-                              &sift_extraction->dsp_num_scales);
+  // AddAndRegisterDefaultOption("SiftExtraction.num_threads",
+  //                             &sift_extraction->num_threads);
+  // AddAndRegisterDefaultOption("SiftExtraction.use_gpu",
+  //                             &sift_extraction->use_gpu);
+  // AddAndRegisterDefaultOption("SiftExtraction.gpu_index",
+  //                             &sift_extraction->gpu_index);
+  // AddAndRegisterDefaultOption("SiftExtraction.max_image_size",
+  //                             &sift_extraction->max_image_size);
+  // AddAndRegisterDefaultOption("SiftExtraction.max_num_features",
+  //                             &sift_extraction->max_num_features);
+  // AddAndRegisterDefaultOption("SiftExtraction.first_octave",
+  //                             &sift_extraction->first_octave);
+  // AddAndRegisterDefaultOption("SiftExtraction.num_octaves",
+  //                             &sift_extraction->num_octaves);
+  // AddAndRegisterDefaultOption("SiftExtraction.octave_resolution",
+  //                             &sift_extraction->octave_resolution);
+  // AddAndRegisterDefaultOption("SiftExtraction.peak_threshold",
+  //                             &sift_extraction->peak_threshold);
+  // AddAndRegisterDefaultOption("SiftExtraction.edge_threshold",
+  //                             &sift_extraction->edge_threshold);
+  // AddAndRegisterDefaultOption("SiftExtraction.estimate_affine_shape",
+  //                             &sift_extraction->estimate_affine_shape);
+  // AddAndRegisterDefaultOption("SiftExtraction.max_num_orientations",
+  //                             &sift_extraction->max_num_orientations);
+  // AddAndRegisterDefaultOption("SiftExtraction.upright",
+  //                             &sift_extraction->upright);
+  // AddAndRegisterDefaultOption("SiftExtraction.domain_size_pooling",
+  //                             &sift_extraction->domain_size_pooling);
+  // AddAndRegisterDefaultOption("SiftExtraction.dsp_min_scale",
+  //                             &sift_extraction->dsp_min_scale);
+  // AddAndRegisterDefaultOption("SiftExtraction.dsp_max_scale",
+  //                             &sift_extraction->dsp_max_scale);
+  // AddAndRegisterDefaultOption("SiftExtraction.dsp_num_scales",
+  //                             &sift_extraction->dsp_num_scales);
 }
 
 void OptionManager::AddMatchingOptions() {
@@ -296,37 +296,37 @@ void OptionManager::AddMatchingOptions() {
   }
   added_match_options_ = true;
 
-  AddAndRegisterDefaultOption("SiftMatching.num_threads",
-                              &sift_matching->num_threads);
-  AddAndRegisterDefaultOption("SiftMatching.use_gpu", &sift_matching->use_gpu);
-  AddAndRegisterDefaultOption("SiftMatching.gpu_index",
-                              &sift_matching->gpu_index);
-  AddAndRegisterDefaultOption("SiftMatching.max_ratio",
-                              &sift_matching->max_ratio);
-  AddAndRegisterDefaultOption("SiftMatching.max_distance",
-                              &sift_matching->max_distance);
-  AddAndRegisterDefaultOption("SiftMatching.cross_check",
-                              &sift_matching->cross_check);
-  AddAndRegisterDefaultOption("SiftMatching.max_error",
-                              &sift_matching->max_error);
-  AddAndRegisterDefaultOption("SiftMatching.max_num_matches",
-                              &sift_matching->max_num_matches);
-  AddAndRegisterDefaultOption("SiftMatching.confidence",
-                              &sift_matching->confidence);
-  AddAndRegisterDefaultOption("SiftMatching.max_num_trials",
-                              &sift_matching->max_num_trials);
-  AddAndRegisterDefaultOption("SiftMatching.min_inlier_ratio",
-                              &sift_matching->min_inlier_ratio);
-  AddAndRegisterDefaultOption("SiftMatching.min_num_inliers",
-                              &sift_matching->min_num_inliers);
-  AddAndRegisterDefaultOption("SiftMatching.multiple_models",
-                              &sift_matching->multiple_models);
-  AddAndRegisterDefaultOption("SiftMatching.guided_matching",
-                              &sift_matching->guided_matching);
-  AddAndRegisterDefaultOption("SiftMatching.planar_scene",
-                              &sift_matching->planar_scene);
-  AddAndRegisterDefaultOption("SiftMatching.compute_relative_pose",
-                              &sift_matching->compute_relative_pose);
+  // AddAndRegisterDefaultOption("SiftMatching.num_threads",
+  //                             &sift_matching->num_threads);
+  // AddAndRegisterDefaultOption("SiftMatching.use_gpu", &sift_matching->use_gpu);
+  // AddAndRegisterDefaultOption("SiftMatching.gpu_index",
+  //                             &sift_matching->gpu_index);
+  // AddAndRegisterDefaultOption("SiftMatching.max_ratio",
+  //                             &sift_matching->max_ratio);
+  // AddAndRegisterDefaultOption("SiftMatching.max_distance",
+  //                             &sift_matching->max_distance);
+  // AddAndRegisterDefaultOption("SiftMatching.cross_check",
+  //                             &sift_matching->cross_check);
+  // AddAndRegisterDefaultOption("SiftMatching.max_error",
+  //                             &sift_matching->max_error);
+  // AddAndRegisterDefaultOption("SiftMatching.max_num_matches",
+  //                             &sift_matching->max_num_matches);
+  // AddAndRegisterDefaultOption("SiftMatching.confidence",
+  //                             &sift_matching->confidence);
+  // AddAndRegisterDefaultOption("SiftMatching.max_num_trials",
+  //                             &sift_matching->max_num_trials);
+  // AddAndRegisterDefaultOption("SiftMatching.min_inlier_ratio",
+  //                             &sift_matching->min_inlier_ratio);
+  // AddAndRegisterDefaultOption("SiftMatching.min_num_inliers",
+  //                             &sift_matching->min_num_inliers);
+  // AddAndRegisterDefaultOption("SiftMatching.multiple_models",
+  //                             &sift_matching->multiple_models);
+  // AddAndRegisterDefaultOption("SiftMatching.guided_matching",
+  //                             &sift_matching->guided_matching);
+  // AddAndRegisterDefaultOption("SiftMatching.planar_scene",
+  //                             &sift_matching->planar_scene);
+  // AddAndRegisterDefaultOption("SiftMatching.compute_relative_pose",
+  //                             &sift_matching->compute_relative_pose);
 }
 
 void OptionManager::AddExhaustiveMatchingOptions() {
@@ -787,8 +787,8 @@ void OptionManager::ResetOptions(const bool reset_paths) {
     *image_path = "";
   }
   *image_reader = ImageReaderOptions();
-  *sift_extraction = SiftExtractionOptions();
-  *sift_matching = SiftMatchingOptions();
+  // *sift_extraction = SiftExtractionOptions();
+  // *sift_matching = SiftMatchingOptions();
   *exhaustive_matching = ExhaustiveMatchingOptions();
   *sequential_matching = SequentialMatchingOptions();
   *vocab_tree_matching = VocabTreeMatchingOptions();
@@ -818,9 +818,9 @@ bool OptionManager::Check() {
     success = success && CHECK_OPTION_IMPL(ExistsDir(*image_path));
 
   if (image_reader) success = success && image_reader->Check();
-  if (sift_extraction) success = success && sift_extraction->Check();
+  // if (sift_extraction) success = success && sift_extraction->Check();
 
-  if (sift_matching) success = success && sift_matching->Check();
+  // if (sift_matching) success = success && sift_matching->Check();
   if (exhaustive_matching) success = success && exhaustive_matching->Check();
   if (sequential_matching) success = success && sequential_matching->Check();
   if (vocab_tree_matching) success = success && vocab_tree_matching->Check();

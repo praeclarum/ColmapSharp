@@ -1,4 +1,6 @@
 CCSRC=$(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc)) \
+	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/estimators/*.cc)) \
+	$(filter-out %/extraction.cc, $(filter-out %/matching.cc, $(filter-out %/sift.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/feature/*.cc))))) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/optim/*.cc)) \
 	$(filter-out %/cudacc.cc, $(filter-out %/cuda.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/util/*.cc)))) \
 	$(wildcard ceres-solver-2.1.0/internal/ceres/miniglog/glog/*.cc) \
@@ -14,7 +16,9 @@ CSRC=$(wildcard colmap-3.8/lib/LSD/*.c) \
 CXX=clang++
 CC=clang
 CFLAGS=-fPIC -O3 \
-	-Icolmap-3.8/src -Icolmap-3.8/lib -Ieigen-3.3.7 -Iceres-solver-2.1.0/include -Iceres-solver-2.1.0/internal/ceres/miniglog -Iceres-solver-2.1.0/internal -Iboost-1.64.0 -Imetis-5.2.1/include -Ifreeimage/Source \
+	-Icolmap-3.8/src -Icolmap-3.8/lib \
+	-Iceres-solver-2.1.0/include -Iceres-solver-2.1.0/internal/ceres/miniglog -Iceres-solver-2.1.0/internal \
+	-Iboost-1.64.0 -Ieigen-3.3.7 -Imetis-5.2.1/include -Ifreeimage/Source -Iflann-1.9.2 -Ilz4-1.9.4/lib \
 	-DIDXTYPEWIDTH=32 -DREALTYPEWIDTH=32 \
 	-DVL_DISABLE_SSE2 -DVL_DISABLE_AVX \
 	-DPBA_NO_GPU \
