@@ -1,8 +1,9 @@
-CCSRC=$(filter-out %/warp.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc))) \
-      $(filter-out %/cudacc.cc, $(filter-out %/cuda.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/util/*.cc))))
+CCSRC=$(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc)) \
+	$(filter-out %/cudacc.cc, $(filter-out %/cuda.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/util/*.cc)))) \
+	$(wildcard ceres-solver-2.1.0/internal/ceres/miniglog/glog/*.cc)
 CPPSRC=$(wildcard boost-1.64.0/libs/program_options/src/*.cpp) \
-       $(wildcard boost-1.64.0/libs/filesystem/src/*.cpp) \
-       $(wildcard boost-1.64.0/libs/system/src/*.cpp)	   
+	$(wildcard boost-1.64.0/libs/filesystem/src/*.cpp) \
+	$(wildcard boost-1.64.0/libs/system/src/*.cpp)
 CSRC=colmap-3.8/lib/LSD/lsd.c
 
 CXX=clang++
@@ -22,6 +23,10 @@ IOS_ARM64_OBJS=$(patsubst %.cc,%-ios-arm64.o,$(CCSRC)) $(patsubst %.c,%-ios-arm6
 IOS_ARM64_FLAGS=-isysroot "$(IOS_SYSROOT)" -target arm64-apple-ios10.0
 
 all: lib/ios/arm64/libcolmap.dylib
+
+clean:
+	rm -rf lib
+	rm -f $(IOS_ARM64_OBJS)
 
 %-ios-arm64.o: %.cc
 	$(CXX) $(CXXFLAGS) $(IOS_ARM64_FLAGS) -c -o $@ $<
