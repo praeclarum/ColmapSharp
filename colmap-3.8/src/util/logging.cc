@@ -35,7 +35,7 @@ namespace colmap {
 
 void InitializeGlog(char** argv) {
 #ifndef _MSC_VER  // Broken in MSVC
-  google::InstallFailureSignalHandler();
+  // google::InstallFailureSignalHandler();
 #endif
   google::InitGoogleLogging(argv[0]);
 }

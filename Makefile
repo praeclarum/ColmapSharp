@@ -1,9 +1,11 @@
-SRC=$(filter-out %/warp.cc, $(filter-out %/line.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc))))
+SRC=$(filter-out %/warp.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc))) \
+	$(filter-out %/cudacc.cc, $(filter-out %/cuda.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/util/*.cc))))
 
 CC=clang++
 CFLAGS=-std=c++14 -frtti -fexceptions -fPIC -O3 \
-	-Icolmap-3.8/src -Ieigen-3.3.7 -Iceres-solver-2.1.0/include -Iceres-solver-2.1.0/internal/ceres/miniglog -Iboost-1.64.0 -Imetis-5.2.1/include -Ifreeimage/Source \
-	-DIDXTYPEWIDTH=32 -DREALTYPEWIDTH=32
+	-Icolmap-3.8/src -Icolmap-3.8/lib -Ieigen-3.3.7 -Iceres-solver-2.1.0/include -Iceres-solver-2.1.0/internal/ceres/miniglog -Iboost-1.64.0 -Imetis-5.2.1/include -Ifreeimage/Source \
+	-DIDXTYPEWIDTH=32 -DREALTYPEWIDTH=32 \
+	-lsqlite3
 
 MACCAT_SYSROOT=$(shell xcrun --sdk macosx --show-sdk-path)
 MAC_SYSROOT=$(shell xcrun --sdk macosx --show-sdk-path)
