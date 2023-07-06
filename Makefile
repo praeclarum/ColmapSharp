@@ -1,7 +1,9 @@
 CCSRC=$(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc)) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/optim/*.cc)) \
 	$(filter-out %/cudacc.cc, $(filter-out %/cuda.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/util/*.cc)))) \
-	$(wildcard ceres-solver-2.1.0/internal/ceres/miniglog/glog/*.cc)
+	$(wildcard ceres-solver-2.1.0/internal/ceres/miniglog/glog/*.cc) \
+	$(filter-out %_benchmark.cc, $(filter-out %test_utils.cc, $(filter-out %/test_util.cc, $(filter-out %/gmock_main.cc, $(filter-out %/gmock_gtest_all.cc, $(filter-out %_test.cc, $(wildcard ceres-solver-2.1.0/internal/ceres/*.cc))))))) \
+	$(wildcard ceres-solver-2.1.0/internal/ceres/generated/*.cc)
 CPPSRC=$(filter-out %/SparseBundleCU.cpp, $(filter-out %/CuTexImage.cpp, $(wildcard colmap-3.8/lib/PBA/*.cpp))) \
 	$(wildcard boost-1.64.0/libs/program_options/src/*.cpp) \
 	$(wildcard boost-1.64.0/libs/filesystem/src/*.cpp) \
@@ -12,10 +14,13 @@ CSRC=$(wildcard colmap-3.8/lib/LSD/*.c) \
 CXX=clang++
 CC=clang
 CFLAGS=-fPIC -O3 \
-	-Icolmap-3.8/src -Icolmap-3.8/lib -Ieigen-3.3.7 -Iceres-solver-2.1.0/include -Iceres-solver-2.1.0/internal/ceres/miniglog -Iboost-1.64.0 -Imetis-5.2.1/include -Ifreeimage/Source \
-	-DIDXTYPEWIDTH=32 -DREALTYPEWIDTH=32 -DVL_DISABLE_SSE2 -DVL_DISABLE_AVX -DPBA_NO_GPU
+	-Icolmap-3.8/src -Icolmap-3.8/lib -Ieigen-3.3.7 -Iceres-solver-2.1.0/include -Iceres-solver-2.1.0/internal/ceres/miniglog -Iceres-solver-2.1.0/internal -Iboost-1.64.0 -Imetis-5.2.1/include -Ifreeimage/Source \
+	-DIDXTYPEWIDTH=32 -DREALTYPEWIDTH=32 \
+	-DVL_DISABLE_SSE2 -DVL_DISABLE_AVX \
+	-DPBA_NO_GPU \
+	-DCERES_NO_EXPORT= -DCERES_NO_CUDA -DCERES_NO_SUITESPARSE -DCERES_NO_CXSPARSE -DCERES_USE_CXX_THREADS
 CXXFLAGS=-std=c++14 -frtti -fexceptions $(CFLAGS)
-LDFLAGS=-lsqlite3
+LDFLAGS=-lsqlite3 -framework Accelerate
 
 MACCAT_SYSROOT=$(shell xcrun --sdk macosx --show-sdk-path)
 MAC_SYSROOT=$(shell xcrun --sdk macosx --show-sdk-path)

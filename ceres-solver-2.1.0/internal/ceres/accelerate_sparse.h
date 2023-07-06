@@ -40,7 +40,7 @@
 #include <string>
 #include <vector>
 
-#include "Accelerate.h"
+#include <Accelerate/Accelerate.h>
 #include "ceres/linear_solver.h"
 #include "ceres/sparse_cholesky.h"
 
