@@ -903,9 +903,9 @@ void AddBlockJtJ(const Float* jc, Float* block, int vn) {
 #define DEFINE_THREAD_DATA(X) \
   template <class Float>      \
   struct X##_STRUCT {         \
-    int tid;
+    size_t tid;
 #define DECLEAR_THREAD_DATA(X, ...)           \
-  X##_STRUCT<Float> tdata = {i, __VA_ARGS__}; \
+  X##_STRUCT<Float> tdata = {size_t(i), __VA_ARGS__}; \
   X##_STRUCT<Float>* newdata = new X##_STRUCT<Float>(tdata)
 #define BEGIN_THREAD_PROC(X) \
   }                          \
@@ -1512,7 +1512,7 @@ bool intrinsic_fixed;
 int radial_distortion;
 bool shuffle;
 Float* jct;
-int i0;
+size_t i0;
 BEGIN_THREAD_PROC(ComputeJacobian)
 ComputeJacobian(q->nproj, q->ncam, q->camera, q->point, q->jc, q->jp, q->jmap,
                 q->sj, q->ms, q->cmlist, q->intrinsic_fixed,
