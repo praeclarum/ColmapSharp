@@ -2,7 +2,7 @@ SRC=$(filter-out %/warp.cc, $(filter-out %/line.cc, $(filter-out %_test.cc, $(wi
 
 CC=clang++
 CFLAGS=-std=c++14 -frtti -fexceptions -fPIC -O3 \
-	-Icolmap-3.8/src -Ieigen-3.3.7 -Iceres-solver-2.1.0/include -Iceres-solver-2.1.0/internal/ceres/miniglog -Iboost-1.64.0 -Imetis-5.2.1/include \
+	-Icolmap-3.8/src -Ieigen-3.3.7 -Iceres-solver-2.1.0/include -Iceres-solver-2.1.0/internal/ceres/miniglog -Iboost-1.64.0 -Imetis-5.2.1/include -Ifreeimage/Source \
 	-DIDXTYPEWIDTH=32 -DREALTYPEWIDTH=32
 
 MACCAT_SYSROOT=$(shell xcrun --sdk macosx --show-sdk-path)
