@@ -1,3 +1,4 @@
+/colmap-cli
 *.o
 /lib
 /*.a

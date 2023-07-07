@@ -20,6 +20,7 @@ CSRC=$(wildcard colmap-3.8/lib/LSD/*.c) \
 	$(wildcard gklib/*.c) \
 	$(filter-out %/wrjpgcom.c, $(filter-out %/rdjpgcom.c, $(filter-out %/djpeg.c, $(filter-out %/jpegtran.c, $(filter-out %/ckconfig.c, $(filter-out %/cjpeg.c, $(filter-out %/jmemname.c, $(filter-out %/jmemnobs.c, $(filter-out %/jmemmac.c, $(filter-out %/jmemdos.c, $(filter-out %/ansi2knr.c, $(filter-out %/example.c, $(wildcard freeimage/Source/LibJPEG/*.c))))))))))))) \
 	$(filter-out %/pngtest.c, $(wildcard freeimage/Source/LibPNG/*.c))
+CLI_SRC=$(wildcard cli/*.cpp)
 
 CXX=clang++
 CC=clang
@@ -55,11 +56,14 @@ MACCAT_X64_FLAGS=-isysroot "$(MACCAT_SYSROOT)" -target x86_64-apple-ios13.1-maca
 MAC_X64_OBJS=$(patsubst %.cc,%-mac-x86_64.o,$(CCSRC)) $(patsubst %.c,%-mac-x86_64.o,$(CSRC)) $(patsubst %.cpp,%-mac-x86_64.o,$(CPPSRC))
 MAC_X64_FLAGS=-isysroot "$(MAC_SYSROOT)" -target x86_64-apple-darwin -mmacosx-version-min=11.0
 
-all: lib/ios/arm64/libcolmap.dylib lib/iossim/x86_64/libcolmap.dylib lib/mac/x86_64/libcolmap.dylib lib/maccat/x86_64/libcolmap.dylib
+all: colmap-cli lib/ios/arm64/libcolmap.dylib lib/iossim/x86_64/libcolmap.dylib lib/mac/x86_64/libcolmap.dylib lib/maccat/x86_64/libcolmap.dylib
 
 clean:
 	rm -rf lib
-	rm -f $(IOS_ARM64_OBJS)
+	rm -f $(IOS_ARM64_OBJS) $(IOSSIM_X64_OBJS) $(MAC_X64_OBJS) $(MACCAT_X64_OBJS)
+
+colmap-cli: $(CLI_SRC) lib/mac/x86_64/libcolmap.dylib Makefile
+	$(CXX) -O3 -std=c++14 -frtti -fexceptions -o $@ $(CLI_SRC)
 
 %-ios-arm64.o: %.cc
 	$(CXX) $(CXXFLAGS) $(IOS_ARM64_FLAGS) -c -o $@ $<
