@@ -9,24 +9,32 @@ CCSRC=$(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc)) \
 CPPSRC=$(filter-out %/SparseBundleCU.cpp, $(filter-out %/CuTexImage.cpp, $(wildcard colmap-3.8/lib/PBA/*.cpp))) \
 	$(wildcard boost-1.64.0/libs/program_options/src/*.cpp) \
 	$(wildcard boost-1.64.0/libs/filesystem/src/*.cpp) \
-	$(wildcard boost-1.64.0/libs/system/src/*.cpp)
+	$(wildcard boost-1.64.0/libs/system/src/*.cpp) \
+	$(filter-out %/J2KHelper.cpp, $(filter-out %/PluginTIFF.cpp, $(filter-out %/PluginG3.cpp, $(filter-out %/PluginRAW.cpp, $(filter-out %/PluginWebP.cpp, $(filter-out %/PluginJP2.cpp, $(filter-out %/PluginJ2K.cpp, $(filter-out %/PluginEXR.cpp, $(filter-out %/PluginJXR.cpp, $(wildcard freeimage/Source/FreeImage/*.cpp)))))))))) \
+	$(filter-out %/XTIFF.cpp, $(wildcard freeimage/Source/Metadata/*.cpp)) \
+	$(wildcard freeimage/Source/FreeImageToolkit/*.cpp)
 CSRC=$(wildcard colmap-3.8/lib/LSD/*.c) \
 	$(filter-out %_avx.c, $(filter-out %_sse2.c, $(wildcard colmap-3.8/lib/VLFeat/*.c))) \
 	$(wildcard metis-5.2.1/libmetis/*.c) \
-	$(wildcard gklib/*.c)
+	$(wildcard gklib/*.c) \
+	$(filter-out %/wrjpgcom.c, $(filter-out %/rdjpgcom.c, $(filter-out %/djpeg.c, $(filter-out %/jpegtran.c, $(filter-out %/ckconfig.c, $(filter-out %/cjpeg.c, $(filter-out %/jmemname.c, $(filter-out %/jmemnobs.c, $(filter-out %/jmemmac.c, $(filter-out %/jmemdos.c, $(filter-out %/ansi2knr.c, $(filter-out %/example.c, $(wildcard freeimage/Source/LibJPEG/*.c))))))))))))) \
+	$(filter-out %/pngtest.c, $(wildcard freeimage/Source/LibPNG/*.c))
 
 CXX=clang++
 CC=clang
 CFLAGS=-fPIC -O3 \
 	-Icolmap-3.8/src -Icolmap-3.8/lib \
 	-Iceres-solver-2.1.0/include -Iceres-solver-2.1.0/internal/ceres/miniglog -Iceres-solver-2.1.0/internal \
-	-Iboost-1.64.0 -Ieigen-3.3.7 -Imetis-5.2.1/include -Ifreeimage/Source -Iflann-1.9.2 -Ilz4-1.9.4/lib -Igklib \
+	-Iboost-1.64.0 -Ieigen-3.3.7 -Imetis-5.2.1/include \
+	-Iflann-1.9.2 -Ilz4-1.9.4/lib -Igklib \
+	-Ifreeimage/Source -Ifreeimage/Source/OpenEXR/Imath \
 	-DIDXTYPEWIDTH=32 -DREALTYPEWIDTH=32 \
 	-DVL_DISABLE_SSE2 -DVL_DISABLE_AVX \
 	-DPBA_NO_GPU \
-	-DCERES_NO_EXPORT= -DCERES_NO_CUDA -DCERES_NO_SUITESPARSE -DCERES_NO_CXSPARSE -DCERES_USE_CXX_THREADS
+	-DCERES_NO_EXPORT= -DCERES_NO_CUDA -DCERES_NO_SUITESPARSE -DCERES_NO_CXSPARSE -DCERES_USE_CXX_THREADS \
+	-DNO_MKTEMP -DPNG_ARM_NEON_OPT=0
 CXXFLAGS=-std=c++14 -frtti -fexceptions $(CFLAGS)
-LDFLAGS=-lsqlite3 -framework Accelerate
+LDFLAGS=-lz -lsqlite3 -framework Accelerate
 
 MACCAT_SYSROOT=$(shell xcrun --sdk macosx --show-sdk-path)
 MAC_SYSROOT=$(shell xcrun --sdk macosx --show-sdk-path)
