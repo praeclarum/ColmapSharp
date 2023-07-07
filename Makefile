@@ -1,7 +1,7 @@
 CCSRC=$(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc)) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/controllers/*.cc)) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/estimators/*.cc)) \
-	$(filter-out %/extraction.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/feature/*.cc))) \
+	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/feature/*.cc)) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/optim/*.cc)) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/sfm/*.cc)) \
 	$(filter-out %/cudacc.cc, $(filter-out %/cuda.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/util/*.cc)))) \

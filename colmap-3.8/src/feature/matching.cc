@@ -700,14 +700,15 @@ SiftFeatureMatcher::SiftFeatureMatcher(const SiftMatchingOptions& options,
     }
 
     if (options_.use_gpu) {
-      auto gpu_options = options_;
-      guided_matchers_.reserve(gpu_indices.size());
-      for (const auto& gpu_index : gpu_indices) {
-        gpu_options.gpu_index = std::to_string(gpu_index);
-        guided_matchers_.emplace_back(
-            std::make_unique<GuidedSiftGPUFeatureMatcher>(
-                gpu_options, cache, &guided_matcher_queue_, &output_queue_));
-      }
+      CHECK(false);
+      // auto gpu_options = options_;
+      // guided_matchers_.reserve(gpu_indices.size());
+      // for (const auto& gpu_index : gpu_indices) {
+      //   gpu_options.gpu_index = std::to_string(gpu_index);
+      //   guided_matchers_.emplace_back(
+      //       std::make_unique<GuidedSiftGPUFeatureMatcher>(
+      //           gpu_options, cache, &guided_matcher_queue_, &output_queue_));
+      // }
     } else {
       guided_matchers_.reserve(num_threads);
       for (int i = 0; i < num_threads; ++i) {

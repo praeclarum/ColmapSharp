@@ -363,17 +363,18 @@ SiftFeatureExtractorThread::SiftFeatureExtractorThread(
 void SiftFeatureExtractorThread::Run() {
   std::unique_ptr<SiftGPU> sift_gpu;
   if (sift_options_.use_gpu) {
+    CHECK(false);
 #ifndef CUDA_ENABLED
     CHECK(opengl_context_);
     CHECK(opengl_context_->MakeCurrent());
 #endif
 
-    sift_gpu = std::make_unique<SiftGPU>();
-    if (!CreateSiftGPUExtractor(sift_options_, sift_gpu.get())) {
-      std::cerr << "ERROR: SiftGPU not fully supported." << std::endl;
-      SignalInvalidSetup();
-      return;
-    }
+    // sift_gpu = std::make_unique<SiftGPU>();
+    // if (!CreateSiftGPUExtractor(sift_options_, sift_gpu.get())) {
+    //   std::cerr << "ERROR: SiftGPU not fully supported." << std::endl;
+    //   SignalInvalidSetup();
+    //   return;
+    // }
   }
 
   SignalValidSetup();
@@ -395,9 +396,11 @@ void SiftFeatureExtractorThread::Run() {
               sift_options_, image_data.bitmap, &image_data.keypoints,
               &image_data.descriptors);
         } else if (sift_options_.use_gpu) {
-          success = ExtractSiftFeaturesGPU(
-              sift_options_, image_data.bitmap, sift_gpu.get(),
-              &image_data.keypoints, &image_data.descriptors);
+          CHECK(false);
+          success = false;
+          //  ExtractSiftFeaturesGPU(
+          //     sift_options_, image_data.bitmap, sift_gpu.get(),
+          //     &image_data.keypoints, &image_data.descriptors);
         } else {
           success = ExtractSiftFeaturesCPU(sift_options_, image_data.bitmap,
                                            &image_data.keypoints,
