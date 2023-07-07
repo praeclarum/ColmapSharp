@@ -254,40 +254,40 @@ void OptionManager::AddExtractionOptions() {
   AddAndRegisterDefaultOption("ImageReader.camera_mask_path",
                               &image_reader->camera_mask_path);
 
-  // AddAndRegisterDefaultOption("SiftExtraction.num_threads",
-  //                             &sift_extraction->num_threads);
-  // AddAndRegisterDefaultOption("SiftExtraction.use_gpu",
-  //                             &sift_extraction->use_gpu);
-  // AddAndRegisterDefaultOption("SiftExtraction.gpu_index",
-  //                             &sift_extraction->gpu_index);
-  // AddAndRegisterDefaultOption("SiftExtraction.max_image_size",
-  //                             &sift_extraction->max_image_size);
-  // AddAndRegisterDefaultOption("SiftExtraction.max_num_features",
-  //                             &sift_extraction->max_num_features);
-  // AddAndRegisterDefaultOption("SiftExtraction.first_octave",
-  //                             &sift_extraction->first_octave);
-  // AddAndRegisterDefaultOption("SiftExtraction.num_octaves",
-  //                             &sift_extraction->num_octaves);
-  // AddAndRegisterDefaultOption("SiftExtraction.octave_resolution",
-  //                             &sift_extraction->octave_resolution);
-  // AddAndRegisterDefaultOption("SiftExtraction.peak_threshold",
-  //                             &sift_extraction->peak_threshold);
-  // AddAndRegisterDefaultOption("SiftExtraction.edge_threshold",
-  //                             &sift_extraction->edge_threshold);
-  // AddAndRegisterDefaultOption("SiftExtraction.estimate_affine_shape",
-  //                             &sift_extraction->estimate_affine_shape);
-  // AddAndRegisterDefaultOption("SiftExtraction.max_num_orientations",
-  //                             &sift_extraction->max_num_orientations);
-  // AddAndRegisterDefaultOption("SiftExtraction.upright",
-  //                             &sift_extraction->upright);
-  // AddAndRegisterDefaultOption("SiftExtraction.domain_size_pooling",
-  //                             &sift_extraction->domain_size_pooling);
-  // AddAndRegisterDefaultOption("SiftExtraction.dsp_min_scale",
-  //                             &sift_extraction->dsp_min_scale);
-  // AddAndRegisterDefaultOption("SiftExtraction.dsp_max_scale",
-  //                             &sift_extraction->dsp_max_scale);
-  // AddAndRegisterDefaultOption("SiftExtraction.dsp_num_scales",
-  //                             &sift_extraction->dsp_num_scales);
+  AddAndRegisterDefaultOption("SiftExtraction.num_threads",
+                              &sift_extraction->num_threads);
+  AddAndRegisterDefaultOption("SiftExtraction.use_gpu",
+                              &sift_extraction->use_gpu);
+  AddAndRegisterDefaultOption("SiftExtraction.gpu_index",
+                              &sift_extraction->gpu_index);
+  AddAndRegisterDefaultOption("SiftExtraction.max_image_size",
+                              &sift_extraction->max_image_size);
+  AddAndRegisterDefaultOption("SiftExtraction.max_num_features",
+                              &sift_extraction->max_num_features);
+  AddAndRegisterDefaultOption("SiftExtraction.first_octave",
+                              &sift_extraction->first_octave);
+  AddAndRegisterDefaultOption("SiftExtraction.num_octaves",
+                              &sift_extraction->num_octaves);
+  AddAndRegisterDefaultOption("SiftExtraction.octave_resolution",
+                              &sift_extraction->octave_resolution);
+  AddAndRegisterDefaultOption("SiftExtraction.peak_threshold",
+                              &sift_extraction->peak_threshold);
+  AddAndRegisterDefaultOption("SiftExtraction.edge_threshold",
+                              &sift_extraction->edge_threshold);
+  AddAndRegisterDefaultOption("SiftExtraction.estimate_affine_shape",
+                              &sift_extraction->estimate_affine_shape);
+  AddAndRegisterDefaultOption("SiftExtraction.max_num_orientations",
+                              &sift_extraction->max_num_orientations);
+  AddAndRegisterDefaultOption("SiftExtraction.upright",
+                              &sift_extraction->upright);
+  AddAndRegisterDefaultOption("SiftExtraction.domain_size_pooling",
+                              &sift_extraction->domain_size_pooling);
+  AddAndRegisterDefaultOption("SiftExtraction.dsp_min_scale",
+                              &sift_extraction->dsp_min_scale);
+  AddAndRegisterDefaultOption("SiftExtraction.dsp_max_scale",
+                              &sift_extraction->dsp_max_scale);
+  AddAndRegisterDefaultOption("SiftExtraction.dsp_num_scales",
+                              &sift_extraction->dsp_num_scales);
 }
 
 void OptionManager::AddMatchingOptions() {
@@ -832,9 +832,9 @@ bool OptionManager::Check() {
   if (mapper) success = success && mapper->Check();
 
   if (patch_match_stereo) success = success && patch_match_stereo->Check();
-  if (stereo_fusion) success = success && stereo_fusion->Check();
-  if (poisson_meshing) success = success && poisson_meshing->Check();
-  if (delaunay_meshing) success = success && delaunay_meshing->Check();
+  // if (stereo_fusion) success = success && stereo_fusion->Check();
+  // if (poisson_meshing) success = success && poisson_meshing->Check();
+  // if (delaunay_meshing) success = success && delaunay_meshing->Check();
 
 #ifdef GUI_ENABLED
   if (render) success = success && render->Check();

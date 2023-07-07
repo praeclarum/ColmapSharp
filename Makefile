@@ -3,6 +3,7 @@ CCSRC=$(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc)) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/estimators/*.cc)) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/feature/*.cc)) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/optim/*.cc)) \
+	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/retrieval/*.cc)) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/sfm/*.cc)) \
 	$(filter-out %/cudacc.cc, $(filter-out %/cuda.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/util/*.cc)))) \
 	$(wildcard ceres-solver-2.1.0/internal/ceres/miniglog/glog/*.cc) \
