@@ -20,6 +20,7 @@ CSRC=$(wildcard colmap-3.8/lib/LSD/*.c) \
 	$(filter-out %_avx.c, $(filter-out %_sse2.c, $(wildcard colmap-3.8/lib/VLFeat/*.c))) \
 	$(wildcard metis-5.2.1/libmetis/*.c) \
 	$(wildcard gklib/*.c) \
+	$(wildcard lz4-1.9.4/lib/*.c) \
 	$(filter-out %/wrjpgcom.c, $(filter-out %/rdjpgcom.c, $(filter-out %/djpeg.c, $(filter-out %/jpegtran.c, $(filter-out %/ckconfig.c, $(filter-out %/cjpeg.c, $(filter-out %/jmemname.c, $(filter-out %/jmemnobs.c, $(filter-out %/jmemmac.c, $(filter-out %/jmemdos.c, $(filter-out %/ansi2knr.c, $(filter-out %/example.c, $(wildcard freeimage/Source/LibJPEG/*.c))))))))))))) \
 	$(filter-out %/pngtest.c, $(wildcard freeimage/Source/LibPNG/*.c))
 CLI_SRC=$(wildcard cli/*.cpp)
