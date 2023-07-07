@@ -44,12 +44,18 @@ IOS_SYSROOT=$(shell xcrun --sdk iphoneos --show-sdk-path)
 IOSSIM_SYSROOT=$(shell xcrun --sdk iphonesimulator --show-sdk-path)
 
 IOS_ARM64_OBJS=$(patsubst %.cc,%-ios-arm64.o,$(CCSRC)) $(patsubst %.c,%-ios-arm64.o,$(CSRC)) $(patsubst %.cpp,%-ios-arm64.o,$(CPPSRC))
-IOS_ARM64_FLAGS=-isysroot "$(IOS_SYSROOT)" -target arm64-apple-ios10.0
+IOS_ARM64_FLAGS=-isysroot "$(IOS_SYSROOT)" -target arm64-apple-ios10.0 -mios-version-min=10.0
+
+IOSSIM_X64_OBJS=$(patsubst %.cc,%-iossim-x86_64.o,$(CCSRC)) $(patsubst %.c,%-iossim-x86_64.o,$(CSRC)) $(patsubst %.cpp,%-iossim-x86_64.o,$(CPPSRC))
+IOSSIM_X64_FLAGS=-isysroot "$(IOSSIM_SYSROOT)" -target x86_64-apple-iossim10.0 -mios-version-min=10.0
+
+MACCAT_X64_OBJS=$(patsubst %.cc,%-maccat-x86_64.o,$(CCSRC)) $(patsubst %.c,%-maccat-x86_64.o,$(CSRC)) $(patsubst %.cpp,%-maccat-x86_64.o,$(CPPSRC))
+MACCAT_X64_FLAGS=-isysroot "$(MACCAT_SYSROOT)" -target x86_64-apple-ios13.1-macabi -mios-version-min=13.1
 
 MAC_X64_OBJS=$(patsubst %.cc,%-mac-x86_64.o,$(CCSRC)) $(patsubst %.c,%-mac-x86_64.o,$(CSRC)) $(patsubst %.cpp,%-mac-x86_64.o,$(CPPSRC))
-MAC_X64_FLAGS=-isysroot "$(MAC_SYSROOT)" -target x86_64-apple-darwin
+MAC_X64_FLAGS=-isysroot "$(MAC_SYSROOT)" -target x86_64-apple-darwin -mmacosx-version-min=11.0
 
-all: lib/ios/arm64/libcolmap.dylib lib/mac/x86_64/libcolmap.dylib
+all: lib/ios/arm64/libcolmap.dylib lib/iossim/x86_64/libcolmap.dylib lib/mac/x86_64/libcolmap.dylib lib/maccat/x86_64/libcolmap.dylib
 
 clean:
 	rm -rf lib
@@ -65,6 +71,16 @@ lib/ios/arm64/libcolmap.dylib: $(IOS_ARM64_OBJS)
 	mkdir -p $(dir $@) && rm -f $@
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(IOS_ARM64_FLAGS) -o $@ $^
 
+%-iossim-x86_64.o: %.cc
+	$(CXX) $(CXXFLAGS) -stdlib=libc++ $(IOSSIM_X64_FLAGS) -c -o $@ $<
+%-iossim-x86_64.o: %.cpp
+	$(CXX) $(CXXFLAGS) -stdlib=libc++ $(IOSSIM_X64_FLAGS) -c -o $@ $<
+%-iossim-x86_64.o: %.c
+	$(CC) $(CFLAGS) $(IOSSIM_X64_FLAGS) -c -o $@ $<
+lib/iossim/x86_64/libcolmap.dylib: $(IOSSIM_X64_OBJS)
+	mkdir -p $(dir $@) && rm -f $@
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(IOSSIM_X64_FLAGS) -o $@ $^
+
 %-mac-x86_64.o: %.cc
 	$(CXX) $(CXXFLAGS) $(MAC_X64_FLAGS) -c -o $@ $<
 %-mac-x86_64.o: %.cpp
@@ -74,3 +90,13 @@ lib/ios/arm64/libcolmap.dylib: $(IOS_ARM64_OBJS)
 lib/mac/x86_64/libcolmap.dylib: $(MAC_X64_OBJS)
 	mkdir -p $(dir $@) && rm -f $@
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(MAC_X64_FLAGS) -o $@ $^
+
+%-maccat-x86_64.o: %.cc
+	$(CXX) $(CXXFLAGS) $(MACCAT_X64_FLAGS) -c -o $@ $<
+%-maccat-x86_64.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(MACCAT_X64_FLAGS) -c -o $@ $<
+%-maccat-x86_64.o: %.c
+	$(CC) $(CFLAGS) $(MACCAT_X64_FLAGS) -c -o $@ $<
+lib/maccat/x86_64/libcolmap.dylib: $(MACCAT_X64_OBJS)
+	mkdir -p $(dir $@) && rm -f $@
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(MACCAT_X64_FLAGS) -o $@ $^
