@@ -1,8 +1,10 @@
 CCSRC=$(filter-out %_test.cc, $(wildcard colmap-3.8/src/base/*.cc)) \
+	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/controllers/*.cc)) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/estimators/*.cc)) \
-	$(filter-out %/extraction.cc, $(filter-out %/matching.cc, $(filter-out %/sift.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/feature/*.cc))))) \
+	$(filter-out %/extraction.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/feature/*.cc))) \
 	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/optim/*.cc)) \
-	$(filter-out %/option_manager.cc, $(filter-out %/cudacc.cc, $(filter-out %/cuda.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/util/*.cc))))) \
+	$(filter-out %_test.cc, $(wildcard colmap-3.8/src/sfm/*.cc)) \
+	$(filter-out %/cudacc.cc, $(filter-out %/cuda.cc, $(filter-out %_test.cc, $(wildcard colmap-3.8/src/util/*.cc)))) \
 	$(wildcard ceres-solver-2.1.0/internal/ceres/miniglog/glog/*.cc) \
 	$(filter-out %_benchmark.cc, $(filter-out %test_utils.cc, $(filter-out %/test_util.cc, $(filter-out %/gmock_main.cc, $(filter-out %/gmock_gtest_all.cc, $(filter-out %_test.cc, $(wildcard ceres-solver-2.1.0/internal/ceres/*.cc))))))) \
 	$(wildcard ceres-solver-2.1.0/internal/ceres/generated/*.cc)
@@ -63,7 +65,7 @@ clean:
 	rm -f $(IOS_ARM64_OBJS) $(IOSSIM_X64_OBJS) $(MAC_X64_OBJS) $(MACCAT_X64_OBJS)
 
 colmap-cli: $(CLI_SRC) lib/mac/x86_64/libcolmap.dylib Makefile
-	$(CXX) -O3 -std=c++14 -frtti -fexceptions -o $@ $(CLI_SRC)
+	$(CXX) $(CXXFLAGS) -Llib/mac/x86_64 -lcolmap -o $@ $(CLI_SRC)
 
 %-ios-arm64.o: %.cc
 	$(CXX) $(CXXFLAGS) $(IOS_ARM64_FLAGS) -c -o $@ $<

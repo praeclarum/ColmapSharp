@@ -123,9 +123,10 @@ AutomaticReconstructionController::AutomaticReconstructionController(
   if (!options_.vocab_tree_path.empty()) {
     option_manager_.vocab_tree_matching->vocab_tree_path =
         options_.vocab_tree_path;
-    vocab_tree_matcher_ = std::make_unique<VocabTreeFeatureMatcher>(
-        *option_manager_.vocab_tree_matching, *option_manager_.sift_matching,
-        *option_manager_.database_path);
+    CHECK(false);
+    // vocab_tree_matcher_ = std::make_unique<VocabTreeFeatureMatcher>(
+    //     *option_manager_.vocab_tree_matching, *option_manager_.sift_matching,
+    //     *option_manager_.database_path);
   }
 }
 

@@ -382,7 +382,7 @@ void SiftCPUFeatureMatcher::Run() {
     }
   }
 }
-
+#ifdef REALLY_HAS_GPU
 SiftGPUFeatureMatcher::SiftGPUFeatureMatcher(const SiftMatchingOptions& options,
                                              FeatureMatcherCache* cache,
                                              JobQueue<Input>* input_queue,
@@ -455,7 +455,7 @@ void SiftGPUFeatureMatcher::GetDescriptorData(
     prev_uploaded_image_ids_[index] = image_id;
   }
 }
-
+#endif
 GuidedSiftCPUFeatureMatcher::GuidedSiftCPUFeatureMatcher(
     const SiftMatchingOptions& options, FeatureMatcherCache* cache,
     JobQueue<Input>* input_queue, JobQueue<Output>* output_queue)
@@ -503,7 +503,7 @@ void GuidedSiftCPUFeatureMatcher::Run() {
     }
   }
 }
-
+#ifdef REALLY_HAS_GPU
 GuidedSiftGPUFeatureMatcher::GuidedSiftGPUFeatureMatcher(
     const SiftMatchingOptions& options, FeatureMatcherCache* cache,
     JobQueue<Input>* input_queue, JobQueue<Output>* output_queue)
@@ -591,7 +591,7 @@ void GuidedSiftGPUFeatureMatcher::GetFeatureData(
     prev_uploaded_image_ids_[index] = image_id;
   }
 }
-
+#endif
 TwoViewGeometryVerifier::TwoViewGeometryVerifier(
     const SiftMatchingOptions& options, FeatureMatcherCache* cache,
     JobQueue<Input>* input_queue, JobQueue<Output>* output_queue)
@@ -676,13 +676,14 @@ SiftFeatureMatcher::SiftFeatureMatcher(const SiftMatchingOptions& options,
 #endif  // CUDA_ENABLED
 
   if (options_.use_gpu) {
-    auto gpu_options = options_;
-    matchers_.reserve(gpu_indices.size());
-    for (const auto& gpu_index : gpu_indices) {
-      gpu_options.gpu_index = std::to_string(gpu_index);
-      matchers_.emplace_back(std::make_unique<SiftGPUFeatureMatcher>(
-          gpu_options, cache, &matcher_queue_, &verifier_queue_));
-    }
+    CHECK(false);
+    // auto gpu_options = options_;
+    // matchers_.reserve(gpu_indices.size());
+    // for (const auto& gpu_index : gpu_indices) {
+    //   gpu_options.gpu_index = std::to_string(gpu_index);
+    //   matchers_.emplace_back(std::make_unique<SiftGPUFeatureMatcher>(
+    //       gpu_options, cache, &matcher_queue_, &verifier_queue_));
+    // }
   } else {
     matchers_.reserve(num_threads);
     for (int i = 0; i < num_threads; ++i) {

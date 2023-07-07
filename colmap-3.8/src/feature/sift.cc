@@ -37,9 +37,9 @@
 
 #include "flann/flann.hpp"
 #if !defined(GUI_ENABLED) && !defined(CUDA_ENABLED)
-#include "GL/glew.h"
+// #include "GL/glew.h"
 #endif
-#include "SiftGPU/SiftGPU.h"
+// #include "SiftGPU/SiftGPU.h"
 #include "VLFeat/covdet.h"
 #include "VLFeat/sift.h"
 #include "feature/utils.h"
@@ -350,7 +350,7 @@ void FindBestMatchesFLANN(
     }
   }
 }
-
+#ifdef REALLY_HAS_GPU
 void WarnIfMaxNumMatchesReachedGPU(const SiftMatchGPU& sift_match_gpu,
                                    const FeatureDescriptors& descriptors) {
   if (sift_match_gpu.GetMaxSift() < descriptors.rows()) {
@@ -361,7 +361,7 @@ void WarnIfMaxNumMatchesReachedGPU(const SiftMatchGPU& sift_match_gpu,
               << std::endl;
   }
 }
-
+#endif
 void WarnDarknessAdaptivityNotAvailable() {
   std::cout << "WARNING: Darkness adaptivity only available for GLSL SiftGPU."
             << std::endl;
@@ -750,7 +750,7 @@ bool ExtractCovariantSiftFeaturesCPU(const SiftExtractionOptions& options,
 
   return true;
 }
-
+#ifdef REALLY_HAS_GPU
 bool CreateSiftGPUExtractor(const SiftExtractionOptions& options,
                             SiftGPU* sift_gpu) {
   CHECK(options.Check());
@@ -914,6 +914,7 @@ bool ExtractSiftFeaturesGPU(const SiftExtractionOptions& options,
 
   return true;
 }
+#endif
 
 void LoadSiftFeaturesFromTextFile(const std::string& path,
                                   FeatureKeypoints* keypoints,
@@ -1092,7 +1093,7 @@ void MatchGuidedSiftFeaturesCPU(const SiftMatchingOptions& match_options,
                        match_options.max_distance, match_options.cross_check,
                        &two_view_geometry->inlier_matches);
 }
-
+#ifdef REALLY_HAS_GPU
 bool CreateSiftGPUMatcher(const SiftMatchingOptions& match_options,
                           SiftMatchGPU* sift_match_gpu) {
   CHECK(match_options.Check());
@@ -1296,5 +1297,5 @@ void MatchGuidedSiftFeaturesGPU(const SiftMatchingOptions& match_options,
     two_view_geometry->inlier_matches.resize(num_matches);
   }
 }
-
+#endif
 }  //  namespace colmap
