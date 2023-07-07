@@ -35,7 +35,8 @@ CFLAGS=-fPIC -O3 \
 	-DCERES_NO_EXPORT= -DCERES_NO_CUDA -DCERES_NO_SUITESPARSE -DCERES_NO_CXSPARSE -DCERES_USE_CXX_THREADS \
 	-DNO_MKTEMP -DPNG_ARM_NEON_OPT=0
 CXXFLAGS=-std=c++14 -frtti -fexceptions $(CFLAGS)
-LDFLAGS=-lz -lsqlite3 -framework Accelerate
+LDFLAGS=-dynamiclib -current_version 1.0 -compatibility_version 1.0 -fvisibility=hidden \
+	-lz -lsqlite3 -framework Accelerate
 
 MACCAT_SYSROOT=$(shell xcrun --sdk macosx --show-sdk-path)
 MAC_SYSROOT=$(shell xcrun --sdk macosx --show-sdk-path)
@@ -45,7 +46,10 @@ IOSSIM_SYSROOT=$(shell xcrun --sdk iphonesimulator --show-sdk-path)
 IOS_ARM64_OBJS=$(patsubst %.cc,%-ios-arm64.o,$(CCSRC)) $(patsubst %.c,%-ios-arm64.o,$(CSRC)) $(patsubst %.cpp,%-ios-arm64.o,$(CPPSRC))
 IOS_ARM64_FLAGS=-isysroot "$(IOS_SYSROOT)" -target arm64-apple-ios10.0
 
-all: lib/ios/arm64/libcolmap.dylib
+MAC_X64_OBJS=$(patsubst %.cc,%-mac-x86_64.o,$(CCSRC)) $(patsubst %.c,%-mac-x86_64.o,$(CSRC)) $(patsubst %.cpp,%-mac-x86_64.o,$(CPPSRC))
+MAC_X64_FLAGS=-isysroot "$(MAC_SYSROOT)" -target x86_64-apple-darwin
+
+all: lib/ios/arm64/libcolmap.dylib lib/mac/x86_64/libcolmap.dylib
 
 clean:
 	rm -rf lib
@@ -60,3 +64,13 @@ clean:
 lib/ios/arm64/libcolmap.dylib: $(IOS_ARM64_OBJS)
 	mkdir -p $(dir $@) && rm -f $@
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(IOS_ARM64_FLAGS) -o $@ $^
+
+%-mac-x86_64.o: %.cc
+	$(CXX) $(CXXFLAGS) $(MAC_X64_FLAGS) -c -o $@ $<
+%-mac-x86_64.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(MAC_X64_FLAGS) -c -o $@ $<
+%-mac-x86_64.o: %.c
+	$(CC) $(CFLAGS) $(MAC_X64_FLAGS) -c -o $@ $<
+lib/mac/x86_64/libcolmap.dylib: $(MAC_X64_OBJS)
+	mkdir -p $(dir $@) && rm -f $@
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(MAC_X64_FLAGS) -o $@ $^
