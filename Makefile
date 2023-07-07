@@ -12,7 +12,8 @@ CPPSRC=$(filter-out %/SparseBundleCU.cpp, $(filter-out %/CuTexImage.cpp, $(wildc
 	$(wildcard boost-1.64.0/libs/system/src/*.cpp) \
 	$(filter-out %/J2KHelper.cpp, $(filter-out %/PluginTIFF.cpp, $(filter-out %/PluginG3.cpp, $(filter-out %/PluginRAW.cpp, $(filter-out %/PluginWebP.cpp, $(filter-out %/PluginJP2.cpp, $(filter-out %/PluginJ2K.cpp, $(filter-out %/PluginEXR.cpp, $(filter-out %/PluginJXR.cpp, $(wildcard freeimage/Source/FreeImage/*.cpp)))))))))) \
 	$(filter-out %/XTIFF.cpp, $(wildcard freeimage/Source/Metadata/*.cpp)) \
-	$(wildcard freeimage/Source/FreeImageToolkit/*.cpp)
+	$(wildcard freeimage/Source/FreeImageToolkit/*.cpp) \
+	$(wildcard src/*.cpp)
 CSRC=$(wildcard colmap-3.8/lib/LSD/*.c) \
 	$(filter-out %_avx.c, $(filter-out %_sse2.c, $(wildcard colmap-3.8/lib/VLFeat/*.c))) \
 	$(wildcard metis-5.2.1/libmetis/*.c) \
