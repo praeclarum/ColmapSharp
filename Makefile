@@ -61,7 +61,7 @@ MACCAT_X64_FLAGS=-isysroot "$(MACCAT_SYSROOT)" -target x86_64-apple-ios13.1-maca
 MAC_X64_OBJS=$(patsubst %.cc,%-mac-x86_64.o,$(CCSRC)) $(patsubst %.c,%-mac-x86_64.o,$(CSRC)) $(patsubst %.cpp,%-mac-x86_64.o,$(CPPSRC))
 MAC_X64_FLAGS=-isysroot "$(MAC_SYSROOT)" -target x86_64-apple-darwin -mmacosx-version-min=11.0
 
-LIBS=lib/ios/arm64/libcolmap.dylib lib/iossim/x86_64/libcolmap.dylib lib/mac/x86_64/libcolmap.dylib lib/maccat/x86_64/libcolmap.dylib
+LIBS=lib/ios/arm64/libcolmap.dylib lib/iossimulator/x86_64/libcolmap.dylib lib/mac/x86_64/libcolmap.dylib lib/maccat/x86_64/libcolmap.dylib
 
 NETV=net7.0
 
