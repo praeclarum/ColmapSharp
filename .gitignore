@@ -1,3 +1,4 @@
+NugetPackages
 /colmap-cli
 *.o
 /lib

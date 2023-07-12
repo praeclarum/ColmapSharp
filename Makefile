@@ -25,6 +25,7 @@ CSRC=$(wildcard colmap-3.8/lib/LSD/*.c) \
 	$(filter-out %/wrjpgcom.c, $(filter-out %/rdjpgcom.c, $(filter-out %/djpeg.c, $(filter-out %/jpegtran.c, $(filter-out %/ckconfig.c, $(filter-out %/cjpeg.c, $(filter-out %/jmemname.c, $(filter-out %/jmemnobs.c, $(filter-out %/jmemmac.c, $(filter-out %/jmemdos.c, $(filter-out %/ansi2knr.c, $(filter-out %/example.c, $(wildcard freeimage/Source/LibJPEG/*.c))))))))))))) \
 	$(filter-out %/pngtest.c, $(wildcard freeimage/Source/LibPNG/*.c))
 CLI_SRC=$(wildcard cli/*.cpp)
+CSSRC=$(wildcard ColmapSharp/*.cs)
 
 CXX=clang++
 CC=clang
@@ -62,32 +63,45 @@ MAC_X64_FLAGS=-isysroot "$(MAC_SYSROOT)" -target x86_64-apple-darwin -mmacosx-ve
 
 LIBS=lib/ios/arm64/libcolmap.dylib lib/iossim/x86_64/libcolmap.dylib lib/mac/x86_64/libcolmap.dylib lib/maccat/x86_64/libcolmap.dylib
 
-ASMS=ColmapSharp/bin/Release/net6.0-ios/ios-arm64/ColmapSharp.dll ColmapSharp/bin/Release/net6.0-ios/iossimulator-x64/ColmapSharp.dll
+NETV=net7.0
 
-all: colmap-cli nuget
+ASMS= \
+	ColmapSharp/bin/Release/$(NETV)-ios/ios-arm64/ColmapSharp.dll \
+	ColmapSharp/bin/Release/$(NETV)-ios/iossimulator-x64/ColmapSharp.dll \
+	ColmapSharp/bin/Release/$(NETV)-maccatalyst/maccatalyst-x64/ColmapSharp.dll \
+	ColmapSharp/bin/Release/$(NETV)-macos/macos-x64/ColmapSharp.dll
+
+all:
+	@echo "Run make native -j 20 to build native libraries"
+	@echo "Run make managed to build managed libraries"
+	@echo "Run make clean to clean up"
+
+native: $(LIBS)
 
 clean:
 	rm -rf lib
 	rm -f $(IOS_ARM64_OBJS) $(IOSSIM_X64_OBJS) $(MAC_X64_OBJS) $(MACCAT_X64_OBJS)
+	rm -f $(ASMS)
 
 colmap-cli: $(CLI_SRC) lib/mac/x86_64/libcolmap.dylib Makefile
 	$(CXX) $(CXXFLAGS) -Llib/mac/x86_64 -lcolmap -o $@ $(CLI_SRC)
 
 nuget: Praeclarum.ColmapSharp.nuspec managed
-	nuget pack Praeclarum.ColmapSharp.nuspec
-	ls -al *.nupkg
+	nuget pack Praeclarum.ColmapSharp.nuspec -OutputDirectory NugetPackages
 
 managed: $(ASMS)
 
-ColmapSharp/bin/Release/net6.0-ios/ios-arm64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRCS) lib/ios/arm64/libcolmap.dylib
-	dotnet build -c Release /p:TargetFrameworks=net6.0-ios /p:RuntimeIdentifier=ios-arm64 ColmapSharp/ColmapSharp.csproj
+ColmapSharp/bin/Release/$(NETV)-ios/ios-arm64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC) lib/ios/arm64/libcolmap.dylib
+	dotnet build -c Release /p:TargetFrameworks=$(NETV)-ios /p:RuntimeIdentifier=ios-arm64 ColmapSharp/ColmapSharp.csproj
 
-ColmapSharp/bin/Release/net6.0-ios/iossimulator-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRCS) lib/iossimulator/x86_64/libcolmap.dylib
-	dotnet build -c Release /p:TargetFrameworks=net6.0-ios /p:RuntimeIdentifier=iossimulator-x64 ColmapSharp/ColmapSharp.csproj
+ColmapSharp/bin/Release/$(NETV)-ios/iossimulator-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC) lib/iossimulator/x86_64/libcolmap.dylib
+	dotnet build -c Release /p:TargetFrameworks=$(NETV)-ios /p:RuntimeIdentifier=iossimulator-x64 ColmapSharp/ColmapSharp.csproj
 
-ColmapSharp/bin/Release/net6.0-maccatalyst/maccatalyst-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRCS) lib/maccat/x86_64/libcolmap.dylib
-	dotnet build -c Release /p:TargetFrameworks=net6.0-maccatalyst /p:RuntimeIdentifier=maccatalyst-x64 ColmapSharp/ColmapSharp.csproj
+ColmapSharp/bin/Release/$(NETV)-maccatalyst/maccatalyst-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC) lib/maccat/x86_64/libcolmap.dylib
+	dotnet build -c Release /p:TargetFrameworks=$(NETV)-maccatalyst /p:RuntimeIdentifier=maccatalyst-x64 ColmapSharp/ColmapSharp.csproj
 
+ColmapSharp/bin/Release/$(NETV)-macos/macos-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC) lib/mac/x86_64/libcolmap.dylib
+	dotnet build -c Release /p:TargetFrameworks=$(NETV)-macos /p:RuntimeIdentifier=macos-x64 ColmapSharp/ColmapSharp.csproj
 
 native: $(LIBS)
 
@@ -107,7 +121,7 @@ lib/ios/arm64/libcolmap.dylib: $(IOS_ARM64_OBJS)
 	$(CXX) $(CXXFLAGS) -stdlib=libc++ $(IOSSIM_X64_FLAGS) -c -o $@ $<
 %-iossim-x86_64.o: %.c
 	$(CC) $(CFLAGS) $(IOSSIM_X64_FLAGS) -c -o $@ $<
-lib/iossim/x86_64/libcolmap.dylib: $(IOSSIM_X64_OBJS)
+lib/iossimulator/x86_64/libcolmap.dylib: $(IOSSIM_X64_OBJS)
 	mkdir -p $(dir $@) && rm -f $@
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(IOSSIM_X64_FLAGS) -o $@ $^
 

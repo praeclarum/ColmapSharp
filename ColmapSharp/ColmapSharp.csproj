@@ -1,9 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <NativeReference Condition=" '$(RuntimeIdentifier)' == 'ios-arm64' " Include="..\lib\ios\arm64\libcolmap.dylib">
+      <Kind>Dynamic</Kind>
+      <IsCxx>true</IsCxx>
+      <ForceLoad>false</ForceLoad>
+      <LinkerFlags></LinkerFlags>
+      <Link>libcolmap.dylib</Link>
+    </NativeReference>
+    <NativeReference Condition=" '$(RuntimeIdentifier)' == 'iossimulator-x64' " Include="..\lib\iossimulator\x86_64\libcolmap.dylib">
+      <Kind>Dynamic</Kind>
+      <IsCxx>true</IsCxx>
+      <ForceLoad>false</ForceLoad>
+      <LinkerFlags></LinkerFlags>
+      <Link>libcolmap.dylib</Link>
+    </NativeReference>
+    <NativeReference Condition=" '$(RuntimeIdentifier)' == 'maccatalyst-x64' " Include="..\lib\maccat\x86_64\libcolmap.dylib">
+      <Kind>Dynamic</Kind>
+      <IsCxx>true</IsCxx>
+      <ForceLoad>false</ForceLoad>
+      <LinkerFlags></LinkerFlags>
+      <Link>libcolmap.dylib</Link>
+    </NativeReference>
+    <NativeReference Condition=" '$(RuntimeIdentifier)' == 'macos-x64' " Include="..\lib\mac\x86_64\libcolmap.dylib">
+      <Kind>Dynamic</Kind>
+      <IsCxx>true</IsCxx>
+      <ForceLoad>false</ForceLoad>
+      <LinkerFlags></LinkerFlags>
+      <Link>libcolmap.dylib</Link>
+    </NativeReference>
+  </ItemGroup>
 
 </Project>
