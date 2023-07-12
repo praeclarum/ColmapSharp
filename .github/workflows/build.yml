@@ -1,6 +1,3 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: build
 
 on:
@@ -16,6 +13,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Update Versions
+      env:
+        VERSION_PREFIX: 0.1
+        VERSION_SUFFIX: ${{github.run_number}}
+      run: |
+        VERSION=$VERSION_PREFIX.$VERSION_SUFFIX
+        sed -i.bak "s:<Version>1.0.0</Version>:<Version>$VERSION</Version>:g" ColmapSharp/ColmapSharp.csproj
+        sed -i.bak "s:<version>1.0.0</version>:<version>$VERSION</version>:g" Praeclarum.ColmapSharp.nuspec
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -26,3 +31,12 @@ jobs:
       run: make managed
     - name: Make native
       run: make native -j $(sysctl -n hw.logicalcpu)
+    - name: Make nuget
+      if: github.ref == 'refs/heads/main'
+      run: make nuget
+    - name: Store nugets
+      if: github.ref == 'refs/heads/main'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ColmapSharpNugets
+        path: "NugetPackages/*.nupkg"
