@@ -86,21 +86,21 @@ clean:
 colmap-cli: $(CLI_SRC) lib/mac/x86_64/libcolmap.dylib Makefile
 	$(CXX) $(CXXFLAGS) -Llib/mac/x86_64 -lcolmap -o $@ $(CLI_SRC)
 
-nuget: Praeclarum.ColmapSharp.nuspec managed
+nuget: Praeclarum.ColmapSharp.nuspec managed $(ASMS) $(LIBS)
 	nuget pack Praeclarum.ColmapSharp.nuspec -OutputDirectory NugetPackages
 
 managed: $(ASMS)
 
-ColmapSharp/bin/Release/$(NETV)-ios/ios-arm64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC) lib/ios/arm64/libcolmap.dylib
+ColmapSharp/bin/Release/$(NETV)-ios/ios-arm64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC)
 	dotnet build -c Release /p:TargetFrameworks=$(NETV)-ios /p:RuntimeIdentifier=ios-arm64 ColmapSharp/ColmapSharp.csproj
 
-ColmapSharp/bin/Release/$(NETV)-ios/iossimulator-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC) lib/iossimulator/x86_64/libcolmap.dylib
+ColmapSharp/bin/Release/$(NETV)-ios/iossimulator-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC)
 	dotnet build -c Release /p:TargetFrameworks=$(NETV)-ios /p:RuntimeIdentifier=iossimulator-x64 ColmapSharp/ColmapSharp.csproj
 
-ColmapSharp/bin/Release/$(NETV)-maccatalyst/maccatalyst-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC) lib/maccat/x86_64/libcolmap.dylib
+ColmapSharp/bin/Release/$(NETV)-maccatalyst/maccatalyst-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC)
 	dotnet build -c Release /p:TargetFrameworks=$(NETV)-maccatalyst /p:RuntimeIdentifier=maccatalyst-x64 ColmapSharp/ColmapSharp.csproj
 
-ColmapSharp/bin/Release/$(NETV)-macos/macos-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC) lib/mac/x86_64/libcolmap.dylib
+ColmapSharp/bin/Release/$(NETV)-macos/macos-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRC)
 	dotnet build -c Release /p:TargetFrameworks=$(NETV)-macos /p:RuntimeIdentifier=macos-x64 ColmapSharp/ColmapSharp.csproj
 
 native: $(LIBS)
