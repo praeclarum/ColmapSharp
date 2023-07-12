@@ -22,5 +22,7 @@ jobs:
         dotnet-version: 7.0.101
     - name: Install workloads
       run: dotnet workload install ios maccatalyst macos
-    - name: make managed
+    - name: Make managed
       run: make managed
+    - name: Make native
+      run: make native -j $(sysctl -n hw.logicalcpu)
