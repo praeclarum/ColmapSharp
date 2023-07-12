@@ -744,7 +744,7 @@ void Reconstruction::Read(const std::string& path) {
   }
 }
 
-void Reconstruction::Write(const std::string& path) const { WriteBinary(path); }
+void Reconstruction::Write(const std::string& path) const { WriteText(path); }
 
 void Reconstruction::ReadText(const std::string& path) {
   ReadCamerasText(JoinPaths(path, "cameras.txt"));

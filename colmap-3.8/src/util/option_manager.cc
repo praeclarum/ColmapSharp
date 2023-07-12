@@ -58,8 +58,8 @@ OptionManager::OptionManager(bool add_project_options) {
   image_path = std::make_shared<std::string>();
 
   image_reader = std::make_shared<ImageReaderOptions>();
-  // sift_extraction = std::make_shared<SiftExtractionOptions>();
-  // sift_matching = std::make_shared<SiftMatchingOptions>();
+  sift_extraction = std::make_shared<SiftExtractionOptions>();
+  sift_matching = std::make_shared<SiftMatchingOptions>();
   exhaustive_matching = std::make_shared<ExhaustiveMatchingOptions>();
   sequential_matching = std::make_shared<SequentialMatchingOptions>();
   vocab_tree_matching = std::make_shared<VocabTreeMatchingOptions>();
@@ -109,7 +109,7 @@ void OptionManager::ModifyForInternetData() {
 }
 
 void OptionManager::ModifyForLowQuality() {
-  // sift_extraction->max_image_size = 1000;
+  sift_extraction->max_image_size = 1000;
   sequential_matching->loop_detection_num_images /= 2;
   vocab_tree_matching->num_images /= 2;
   mapper->ba_local_max_num_iterations /= 2;
@@ -128,7 +128,7 @@ void OptionManager::ModifyForLowQuality() {
 }
 
 void OptionManager::ModifyForMediumQuality() {
-  // sift_extraction->max_image_size = 1600;
+  sift_extraction->max_image_size = 1600;
   sequential_matching->loop_detection_num_images /= 1.5;
   vocab_tree_matching->num_images /= 1.5;
   mapper->ba_local_max_num_iterations /= 1.5;
@@ -147,9 +147,9 @@ void OptionManager::ModifyForMediumQuality() {
 }
 
 void OptionManager::ModifyForHighQuality() {
-  // sift_extraction->estimate_affine_shape = true;
-  // sift_extraction->max_image_size = 2400;
-  // sift_matching->guided_matching = true;
+  sift_extraction->estimate_affine_shape = true;
+  sift_extraction->max_image_size = 2400;
+  sift_matching->guided_matching = true;
   mapper->ba_local_max_num_iterations = 30;
   mapper->ba_local_max_refinements = 3;
   mapper->ba_global_max_num_iterations = 75;
@@ -159,9 +159,9 @@ void OptionManager::ModifyForHighQuality() {
 
 void OptionManager::ModifyForExtremeQuality() {
   // Most of the options are set to extreme quality by default.
-  // sift_extraction->estimate_affine_shape = true;
-  // sift_extraction->domain_size_pooling = true;
-  // sift_matching->guided_matching = true;
+  sift_extraction->estimate_affine_shape = true;
+  sift_extraction->domain_size_pooling = true;
+  sift_matching->guided_matching = true;
   mapper->ba_local_max_num_iterations = 40;
   mapper->ba_local_max_refinements = 3;
   mapper->ba_global_max_num_iterations = 100;
@@ -787,8 +787,8 @@ void OptionManager::ResetOptions(const bool reset_paths) {
     *image_path = "";
   }
   *image_reader = ImageReaderOptions();
-  // *sift_extraction = SiftExtractionOptions();
-  // *sift_matching = SiftMatchingOptions();
+  *sift_extraction = SiftExtractionOptions();
+  *sift_matching = SiftMatchingOptions();
   *exhaustive_matching = ExhaustiveMatchingOptions();
   *sequential_matching = SequentialMatchingOptions();
   *vocab_tree_matching = VocabTreeMatchingOptions();
@@ -818,9 +818,9 @@ bool OptionManager::Check() {
     success = success && CHECK_OPTION_IMPL(ExistsDir(*image_path));
 
   if (image_reader) success = success && image_reader->Check();
-  // if (sift_extraction) success = success && sift_extraction->Check();
+  if (sift_extraction) success = success && sift_extraction->Check();
 
-  // if (sift_matching) success = success && sift_matching->Check();
+  if (sift_matching) success = success && sift_matching->Check();
   if (exhaustive_matching) success = success && exhaustive_matching->Check();
   if (sequential_matching) success = success && sequential_matching->Check();
   if (vocab_tree_matching) success = success && vocab_tree_matching->Check();
