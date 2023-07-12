@@ -30,6 +30,7 @@ jobs:
     - name: Make managed
       run: make managed
     - name: Make native
+      if: github.ref == 'refs/heads/main'
       run: make native -j $(sysctl -n hw.logicalcpu)
     - name: Make nuget
       if: github.ref == 'refs/heads/main'
