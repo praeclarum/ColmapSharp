@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+    <metadata>
+        <id>Praeclarum.ColmapSharp</id>
+        <version>1.0.0</version>
+        <title>Praeclarum.ColmapSharp</title>
+        <authors>praeclarum</authors>
+        <owners>praeclarum</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>COLMAP bindings for .NET</description>
+        <tags>colmap colmapsharp photogrammetry 3d graphics</tags>
+        <license type="expression">MIT</license>
+        <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+        <repository type="git" url="https://github.com/praeclarum/ColmapSharp" />
+    </metadata>
+    <files>
+        <!-- DLLs and resources -->
+        <file src="ColmapSharp\bin\Release\net6.0-ios\ios-arm64\ColmapSharp.dll" target="lib\net6.0-ios13.6"/>
+        <file src="ColmapSharp\bin\Release\net6.0-maccatalyst\maccatalyst-x64\ColmapSharp.dll" target="lib\net6.0-maccatalyst13.6"/>
+    </files>
+</package>

@@ -60,7 +60,11 @@ MACCAT_X64_FLAGS=-isysroot "$(MACCAT_SYSROOT)" -target x86_64-apple-ios13.1-maca
 MAC_X64_OBJS=$(patsubst %.cc,%-mac-x86_64.o,$(CCSRC)) $(patsubst %.c,%-mac-x86_64.o,$(CSRC)) $(patsubst %.cpp,%-mac-x86_64.o,$(CPPSRC))
 MAC_X64_FLAGS=-isysroot "$(MAC_SYSROOT)" -target x86_64-apple-darwin -mmacosx-version-min=11.0
 
-all: colmap-cli lib/ios/arm64/libcolmap.dylib lib/iossim/x86_64/libcolmap.dylib lib/mac/x86_64/libcolmap.dylib lib/maccat/x86_64/libcolmap.dylib
+LIBS=lib/ios/arm64/libcolmap.dylib lib/iossim/x86_64/libcolmap.dylib lib/mac/x86_64/libcolmap.dylib lib/maccat/x86_64/libcolmap.dylib
+
+ASMS=ColmapSharp/bin/Release/net6.0-ios/ios-arm64/ColmapSharp.dll ColmapSharp/bin/Release/net6.0-ios/iossimulator-x64/ColmapSharp.dll
+
+all: colmap-cli nuget
 
 clean:
 	rm -rf lib
@@ -68,6 +72,24 @@ clean:
 
 colmap-cli: $(CLI_SRC) lib/mac/x86_64/libcolmap.dylib Makefile
 	$(CXX) $(CXXFLAGS) -Llib/mac/x86_64 -lcolmap -o $@ $(CLI_SRC)
+
+nuget: Praeclarum.ColmapSharp.nuspec managed
+	nuget pack Praeclarum.ColmapSharp.nuspec
+	ls -al *.nupkg
+
+managed: $(ASMS)
+
+ColmapSharp/bin/Release/net6.0-ios/ios-arm64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRCS) lib/ios/arm64/libcolmap.dylib
+	dotnet build -c Release /p:TargetFrameworks=net6.0-ios /p:RuntimeIdentifier=ios-arm64 ColmapSharp/ColmapSharp.csproj
+
+ColmapSharp/bin/Release/net6.0-ios/iossimulator-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRCS) lib/iossimulator/x86_64/libcolmap.dylib
+	dotnet build -c Release /p:TargetFrameworks=net6.0-ios /p:RuntimeIdentifier=iossimulator-x64 ColmapSharp/ColmapSharp.csproj
+
+ColmapSharp/bin/Release/net6.0-maccatalyst/maccatalyst-x64/ColmapSharp.dll: ColmapSharp/ColmapSharp.csproj $(CSSRCS) lib/maccat/x86_64/libcolmap.dylib
+	dotnet build -c Release /p:TargetFrameworks=net6.0-maccatalyst /p:RuntimeIdentifier=maccatalyst-x64 ColmapSharp/ColmapSharp.csproj
+
+
+native: $(LIBS)
 
 %-ios-arm64.o: %.cc
 	$(CXX) $(CXXFLAGS) $(IOS_ARM64_FLAGS) -c -o $@ $<
