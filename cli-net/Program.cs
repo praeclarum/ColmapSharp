@@ -1,9 +1,15 @@
 ﻿using ColmapSharp;
-using Foundation;
 
-using var w = new StreamWriter("../alog.txt");
-Console.SetOut(w);
+using var output = new StreamWriter("../aout.txt");
+using var error = new StreamWriter("../aerr.txt");
+Console.SetOut(output);
+Console.SetError(error);
 
 Console.WriteLine($"Hello ColmapSharp! {DateTime.Now}");
 
-// Colmap.RunAutomaticReconstruction("", "");
+try {
+    Colmap.RunAutomaticReconstruction("", "");
+}
+catch (Exception e) {
+    Console.WriteLine(e);
+}
