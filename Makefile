@@ -51,10 +51,10 @@ IOS_SYSROOT=$(shell xcrun --sdk iphoneos --show-sdk-path)
 IOSSIM_SYSROOT=$(shell xcrun --sdk iphonesimulator --show-sdk-path)
 
 IOS_ARM64_OBJS=$(patsubst %.cc,%-ios-arm64.o,$(CCSRC)) $(patsubst %.c,%-ios-arm64.o,$(CSRC)) $(patsubst %.cpp,%-ios-arm64.o,$(CPPSRC))
-IOS_ARM64_FLAGS=-isysroot "$(IOS_SYSROOT)" -target arm64-apple-ios10.0 -mios-version-min=10.0
+IOS_ARM64_FLAGS=-isysroot "$(IOS_SYSROOT)" -target arm64-apple-ios11.0 -mios-version-min=10.0
 
 IOSSIM_X64_OBJS=$(patsubst %.cc,%-iossim-x86_64.o,$(CCSRC)) $(patsubst %.c,%-iossim-x86_64.o,$(CSRC)) $(patsubst %.cpp,%-iossim-x86_64.o,$(CPPSRC))
-IOSSIM_X64_FLAGS=-isysroot "$(IOSSIM_SYSROOT)" -target x86_64-apple-iossim10.0 -mios-version-min=10.0
+IOSSIM_X64_FLAGS=-isysroot "$(IOSSIM_SYSROOT)" -target x86_64-apple-iossim11.0 -mios-version-min=10.0
 
 MACCAT_X64_OBJS=$(patsubst %.cc,%-maccat-x86_64.o,$(CCSRC)) $(patsubst %.c,%-maccat-x86_64.o,$(CSRC)) $(patsubst %.cpp,%-maccat-x86_64.o,$(CPPSRC))
 MACCAT_X64_FLAGS=-isysroot "$(MACCAT_SYSROOT)" -target x86_64-apple-ios13.1-macabi -mios-version-min=13.1
