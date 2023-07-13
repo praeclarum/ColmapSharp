@@ -11,9 +11,9 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    - name: make
+    - name: Build
       run: make -j $(sysctl -n hw.logicalcpu) lib/ios/arm64/libcolmap.dylib
-    - name: store
+    - name: Upload
       uses: actions/upload-artifact@v3
       with:
         name: lib-ios
@@ -23,21 +23,21 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    - name: make
+    - name: Build
       run: make -j $(sysctl -n hw.logicalcpu) lib/iossimulator/x86_64/libcolmap.dylib
-    - name: store
+    - name: Upload
       uses: actions/upload-artifact@v3
       with:
-        name: lib-iossim
+        name: lib-iossimulator
         path: lib
 
   build-maccat:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    - name: make
+    - name: Build
       run: make -j $(sysctl -n hw.logicalcpu) lib/maccat/x86_64/libcolmap.dylib
-    - name: store
+    - name: Upload
       uses: actions/upload-artifact@v3
       with:
         name: lib-maccat
@@ -47,9 +47,9 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
-    - name: make
+    - name: Build
       run: make -j $(sysctl -n hw.logicalcpu) lib/mac/x86_64/libcolmap.dylib
-    - name: store
+    - name: Upload
       uses: actions/upload-artifact@v3
       with:
         name: lib-mac
