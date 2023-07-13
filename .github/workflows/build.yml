@@ -101,7 +101,7 @@ jobs:
     - name: Make nuget
       run: make nuget
     - name: Store nugets
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ColmapSharpNugets
         path: "NugetPackages/*.nupkg"
