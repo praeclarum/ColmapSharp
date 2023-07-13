@@ -14,7 +14,7 @@ jobs:
     - name: make
       run: make -j $(sysctl -n hw.logicalcpu) lib/ios/arm64/libcolmap.dylib
     - name: store
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: lib-ios
         path: lib
@@ -26,7 +26,7 @@ jobs:
     - name: make
       run: make -j $(sysctl -n hw.logicalcpu) lib/iossimulator/x86_64/libcolmap.dylib
     - name: store
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: lib-iossim
         path: lib
@@ -38,7 +38,7 @@ jobs:
     - name: make
       run: make -j $(sysctl -n hw.logicalcpu) lib/maccat/x86_64/libcolmap.dylib
     - name: store
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: lib-maccat
         path: lib
@@ -50,7 +50,7 @@ jobs:
     - name: make
       run: make -j $(sysctl -n hw.logicalcpu) lib/mac/x86_64/libcolmap.dylib
     - name: store
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: lib-mac
         path: lib
