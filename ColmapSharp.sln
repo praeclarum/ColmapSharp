@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColmapSharp", "ColmapSharp\ColmapSharp.csproj", "{11C771C6-6C31-4C01-AF33-E4C0C50CC21C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cli-net", "cli-net\cli-net.csproj", "{AAE4075D-51FD-4EA7-BEB2-765A3D6C886D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{11C771C6-6C31-4C01-AF33-E4C0C50CC21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11C771C6-6C31-4C01-AF33-E4C0C50CC21C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11C771C6-6C31-4C01-AF33-E4C0C50CC21C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE4075D-51FD-4EA7-BEB2-765A3D6C886D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE4075D-51FD-4EA7-BEB2-765A3D6C886D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE4075D-51FD-4EA7-BEB2-765A3D6C886D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE4075D-51FD-4EA7-BEB2-765A3D6C886D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

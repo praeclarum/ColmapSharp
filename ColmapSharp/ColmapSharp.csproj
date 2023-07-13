@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Version>1.0.0</Version>
-    <TargetFrameworks>net7.0-ios;net7.0-maccatalyst;net7.0-macos</TargetFrameworks>
+    <TargetFrameworks>net7.0;net7.0-ios;net7.0-maccatalyst;net7.0-macos</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
