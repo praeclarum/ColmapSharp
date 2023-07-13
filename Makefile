@@ -85,7 +85,7 @@ clean:
 	rm -f $(ASMS)
 
 colmap-cli: $(CLI_SRC) lib/mac/x86_64/libcolmap.dylib Makefile
-	$(CXX) $(CXXFLAGS) -Llib/mac/x86_64 -lcolmap -o $@ $(CLI_SRC)
+	@$(CXX) $(CXXFLAGS) -Llib/mac/x86_64 -lcolmap -o $@ $(CLI_SRC)
 
 nuget: Praeclarum.ColmapSharp.nuspec $(ASMS)
 	nuget pack Praeclarum.ColmapSharp.nuspec -OutputDirectory NugetPackages
@@ -107,41 +107,41 @@ ColmapSharp/bin/Release/$(NETV)-macos/macos-x64/ColmapSharp.dll: ColmapSharp/Col
 native: $(LIBS)
 
 %-ios-arm64.o: %.cc
-	$(CXX) $(CXXFLAGS) $(IOS_ARM64_FLAGS) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) $(IOS_ARM64_FLAGS) -c -o $@ $<
 %-ios-arm64.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(IOS_ARM64_FLAGS) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) $(IOS_ARM64_FLAGS) -c -o $@ $<
 %-ios-arm64.o: %.c
-	$(CC) $(CFLAGS) $(IOS_ARM64_FLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) $(IOS_ARM64_FLAGS) -c -o $@ $<
 lib/ios/arm64/libcolmap.dylib: $(IOS_ARM64_OBJS)
-	mkdir -p $(dir $@) && rm -f $@
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(IOS_ARM64_FLAGS) -o $@ $^
+	@mkdir -p $(dir $@) && rm -f $@
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) $(IOS_ARM64_FLAGS) -o $@ $^
 
 %-iossim-x86_64.o: %.cc
-	$(CXX) $(CXXFLAGS) -stdlib=libc++ $(IOSSIM_X64_FLAGS) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) -stdlib=libc++ $(IOSSIM_X64_FLAGS) -c -o $@ $<
 %-iossim-x86_64.o: %.cpp
-	$(CXX) $(CXXFLAGS) -stdlib=libc++ $(IOSSIM_X64_FLAGS) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) -stdlib=libc++ $(IOSSIM_X64_FLAGS) -c -o $@ $<
 %-iossim-x86_64.o: %.c
-	$(CC) $(CFLAGS) $(IOSSIM_X64_FLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) $(IOSSIM_X64_FLAGS) -c -o $@ $<
 lib/iossimulator/x86_64/libcolmap.dylib: $(IOSSIM_X64_OBJS)
-	mkdir -p $(dir $@) && rm -f $@
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(IOSSIM_X64_FLAGS) -o $@ $^
+	@mkdir -p $(dir $@) && rm -f $@
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) $(IOSSIM_X64_FLAGS) -o $@ $^
 
 %-mac-x86_64.o: %.cc
-	$(CXX) $(CXXFLAGS) $(MAC_X64_FLAGS) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) $(MAC_X64_FLAGS) -c -o $@ $<
 %-mac-x86_64.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(MAC_X64_FLAGS) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) $(MAC_X64_FLAGS) -c -o $@ $<
 %-mac-x86_64.o: %.c
-	$(CC) $(CFLAGS) $(MAC_X64_FLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) $(MAC_X64_FLAGS) -c -o $@ $<
 lib/mac/x86_64/libcolmap.dylib: $(MAC_X64_OBJS)
-	mkdir -p $(dir $@) && rm -f $@
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(MAC_X64_FLAGS) -o $@ $^
+	@mkdir -p $(dir $@) && rm -f $@
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) $(MAC_X64_FLAGS) -o $@ $^
 
 %-maccat-x86_64.o: %.cc
-	$(CXX) $(CXXFLAGS) $(MACCAT_X64_FLAGS) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) $(MACCAT_X64_FLAGS) -c -o $@ $<
 %-maccat-x86_64.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(MACCAT_X64_FLAGS) -c -o $@ $<
+	@$(CXX) $(CXXFLAGS) $(MACCAT_X64_FLAGS) -c -o $@ $<
 %-maccat-x86_64.o: %.c
-	$(CC) $(CFLAGS) $(MACCAT_X64_FLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) $(MACCAT_X64_FLAGS) -c -o $@ $<
 lib/maccat/x86_64/libcolmap.dylib: $(MACCAT_X64_OBJS)
-	mkdir -p $(dir $@) && rm -f $@
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(MACCAT_X64_FLAGS) -o $@ $^
+	@mkdir -p $(dir $@) && rm -f $@
+	@$(CXX) $(CXXFLAGS) $(LDFLAGS) $(MACCAT_X64_FLAGS) -o $@ $^
