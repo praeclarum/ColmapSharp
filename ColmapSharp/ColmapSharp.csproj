@@ -5,6 +5,7 @@
     <TargetFrameworks>net7.0;net7.0-ios;net7.0-maccatalyst;net7.0-macos</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

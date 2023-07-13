@@ -23,13 +23,16 @@
     </metadata>
     <files>
         <file src="ColmapSharp\bin\Release\net7.0-ios\ios-arm64\ColmapSharp.dll" target="lib\net7.0-ios10.0"/>
+        <file src="ColmapSharp\bin\Release\net7.0-ios\ios-arm64\ColmapSharp.xml" target="lib\net7.0-ios10.0"/>
         <file src="lib\ios\arm64\libcolmap.dylib" target="runtimes\ios-arm64\native"/>
         <file src="lib\iossimulator\x86_64\libcolmap.dylib" target="runtimes\iossimulator-x64\native"/>
 
         <file src="ColmapSharp\bin\Release\net7.0-maccatalyst\maccatalyst-x64\ColmapSharp.dll" target="lib\net7.0-maccatalyst13.1"/>
+        <file src="ColmapSharp\bin\Release\net7.0-maccatalyst\maccatalyst-x64\ColmapSharp.xml" target="lib\net7.0-maccatalyst13.1"/>
         <file src="lib\maccat\x86_64\libcolmap.dylib" target="runtimes\maccatalyst-x64\native"/>
 
         <file src="ColmapSharp\bin\Release\net7.0-macos\macos-x64\ColmapSharp.dll" target="lib\net7.0-macos11.0"/>
+        <file src="ColmapSharp\bin\Release\net7.0-macos\macos-x64\ColmapSharp.xml" target="lib\net7.0-macos11.0"/>
         <file src="lib\mac\x86_64\libcolmap.dylib" target="runtimes\macos-x64\native"/>
     </files>
 </package>
