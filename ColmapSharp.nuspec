@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
     <metadata>
-        <id>Praeclarum.ColmapSharp</id>
+        <id>ColmapSharp</id>
         <version>1.0.0</version>
-        <title>Praeclarum.ColmapSharp</title>
+        <title>ColmapSharp</title>
         <authors>praeclarum</authors>
         <owners>praeclarum</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>

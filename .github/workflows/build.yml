@@ -89,7 +89,7 @@ jobs:
       run: |
         VERSION=$VERSION_PREFIX.$VERSION_SUFFIX
         sed -i.bak "s:<Version>1.0.0</Version>:<Version>$VERSION</Version>:g" ColmapSharp/ColmapSharp.csproj
-        sed -i.bak "s:<version>1.0.0</version>:<version>$VERSION</version>:g" Praeclarum.ColmapSharp.nuspec
+        sed -i.bak "s:<version>1.0.0</version>:<version>$VERSION</version>:g" ColmapSharp.nuspec
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
