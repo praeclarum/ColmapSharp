@@ -179,7 +179,7 @@ class CERES_EXPORT MessageLogger {
   }
 
   // Output the contents of the stream to the proper channel on destruction.
-  ~MessageLogger() {
+  ~MessageLogger() throw(std::runtime_error) {
     stream_ << "\n";
 
 #ifdef ANDROID
@@ -216,7 +216,8 @@ class CERES_EXPORT MessageLogger {
     // Android logging at level FATAL does not terminate execution, so abort()
     // is still required to stop the program.
     if (severity_ == FATAL) {
-      abort();
+      // abort();
+      throw std::runtime_error(stream_.str());
     }
   }
 

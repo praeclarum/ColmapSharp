@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <cstdio>
+#include <exception>
 using namespace std;
 
 #include "base/reconstruction.h"
@@ -10,21 +11,27 @@ extern "C" {
 
 int32_t colmapAutomaticReconstruction(const char *image_path, const char *workspace_path, int32_t quality, const char *camera_model, bool dense)
 {
-    AutomaticReconstructionController::Options reconstruction_options;
-    reconstruction_options.image_path = image_path;
-    reconstruction_options.workspace_path = workspace_path;
-    reconstruction_options.quality = (AutomaticReconstructionController::Quality)quality;
-    reconstruction_options.use_gpu = false;
-    reconstruction_options.dense = dense;
-    reconstruction_options.camera_model = camera_model;
-    ReconstructionManager reconstruction_manager;
+    try {
+        AutomaticReconstructionController::Options reconstruction_options;
+        reconstruction_options.image_path = image_path;
+        reconstruction_options.workspace_path = workspace_path;
+        reconstruction_options.quality = (AutomaticReconstructionController::Quality)quality;
+        reconstruction_options.use_gpu = false;
+        reconstruction_options.dense = dense;
+        reconstruction_options.camera_model = camera_model;
+        ReconstructionManager reconstruction_manager;
 
-    AutomaticReconstructionController controller(reconstruction_options,
-                                                 &reconstruction_manager);
-    controller.Start();
-    controller.Wait();
+        AutomaticReconstructionController controller(reconstruction_options,
+                                                    &reconstruction_manager);
+        controller.Start();
+        controller.Wait();
 
-    return reconstruction_manager.Size() == 1 ? 0 : 1;
+        return reconstruction_manager.Size() == 1 ? 0 : 1;
+    }
+    catch (runtime_error &ex) {
+        fprintf(stderr, "Runtime error: %s\n", ex.what());
+        return 2;
+    }
 }
 
 }
