@@ -8,12 +8,15 @@ using namespace colmap;
 
 extern "C" {
 
-int32_t colmapAutomaticReconstruction(const char *image_path, const char *workspace_path)
+int32_t colmapAutomaticReconstruction(const char *image_path, const char *workspace_path, int32_t quality, const char *camera_model, bool dense)
 {
     AutomaticReconstructionController::Options reconstruction_options;
-    reconstruction_options.image_path = "/Users/fak/work/colmap1in";
-    reconstruction_options.workspace_path = "/Users/fak/work/colmap1_2";
+    reconstruction_options.image_path = image_path;
+    reconstruction_options.workspace_path = workspace_path;
+    reconstruction_options.quality = (AutomaticReconstructionController::Quality)quality;
     reconstruction_options.use_gpu = false;
+    reconstruction_options.dense = dense;
+    reconstruction_options.camera_model = camera_model;
     ReconstructionManager reconstruction_manager;
 
     AutomaticReconstructionController controller(reconstruction_options,
@@ -21,7 +24,7 @@ int32_t colmapAutomaticReconstruction(const char *image_path, const char *worksp
     controller.Start();
     controller.Wait();
 
-    return 0;
+    return reconstruction_manager.Size() == 1 ? 0 : 1;
 }
 
 }
