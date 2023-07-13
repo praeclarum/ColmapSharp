@@ -64,18 +64,22 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: lib-ios
+        path: lib
     - name: Download iossimulator
       uses: actions/download-artifact@v3
       with:
         name: lib-iossimulator
+        path: lib
     - name: Download maccat
       uses: actions/download-artifact@v3
       with:
         name: lib-maccat
+        path: lib
     - name: Download mac
       uses: actions/download-artifact@v3
       with:
         name: lib-mac
+        path: lib
     - name: List lib
       run: ls -lR lib
     - name: Update Versions
