@@ -1,4 +1,6 @@
-﻿using ColmapSharp;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using ColmapSharp;
 
 #if __MACOS__
 using var output = new StreamWriter("../aout.txt");
@@ -16,7 +18,8 @@ try {
     }
     var imagesDirectory = args[0];
     var workDirectory = args[1];
-    Colmap.RunAutomaticReconstruction(imagesDirectory, workDirectory);
+    var rec = Colmap.RunAutomaticReconstruction(imagesDirectory, workDirectory);
+    Console.WriteLine(JsonSerializer.Serialize(rec));
 }
 catch (Exception e) {
     Console.WriteLine(e);
