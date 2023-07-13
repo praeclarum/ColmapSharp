@@ -188,13 +188,24 @@ size_t GetFileSize(const std::string& path) {
   return file.tellg();
 }
 
+void (*colmapPrintHeading1Callback)(const std::string& heading) = nullptr;
+void (*colmapPrintHeading2Callback)(const std::string& heading) = nullptr;
+
 void PrintHeading1(const std::string& heading) {
+  if (colmapPrintHeading1Callback != nullptr) {
+    colmapPrintHeading1Callback(heading);
+    return;
+  }
   std::cout << std::endl << std::string(78, '=') << std::endl;
   std::cout << heading << std::endl;
   std::cout << std::string(78, '=') << std::endl << std::endl;
 }
 
 void PrintHeading2(const std::string& heading) {
+  if (colmapPrintHeading2Callback != nullptr) {
+    colmapPrintHeading2Callback(heading);
+    return;
+  }
   std::cout << std::endl << heading << std::endl;
   std::cout << std::string(std::min<int>(heading.size(), 78), '-') << std::endl;
 }

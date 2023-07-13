@@ -1,7 +1,12 @@
 {
     "cmake.configureOnOpen": false,
     "files.associations": {
-        "vector": "cpp"
+        "vector": "cpp",
+        "tensor": "cpp",
+        "compare": "cpp",
+        "cstdint": "cpp",
+        "types": "cpp",
+        "iosfwd": "cpp"
     },
     "dotnet.defaultSolution": "ColmapSharp.sln"
 }

@@ -117,13 +117,13 @@ public record Reconstruction(Image[] Images, Camera[] Cameras) {
     public Camera GetCamera(int id) => FindCamera(id) ?? throw new Exception($"Camera {id} not found");
 }
 
-public static class Colmap
+public static partial class Colmap
 {
     const string Lib = "libcolmap";
 
-    public static Reconstruction RunAutomaticReconstruction(string imagesDirectory, string workDirectory, Quality quality = Quality.High, string cameraModel = "SIMPLE_RADIAL", bool dense = false)
+    public static unsafe Reconstruction RunAutomaticReconstruction(string imagesDirectory, string workDirectory, Quality quality = Quality.High, string cameraModel = "SIMPLE_RADIAL", bool dense = false, delegate *unmanaged[Cdecl]<int, int, void> progress = null)
     {
-        var r = colmapAutomaticReconstruction(imagesDirectory, workDirectory, (int)quality, cameraModel, dense);
+        var r = colmapAutomaticReconstruction(imagesDirectory, workDirectory, (int)quality, cameraModel, dense, progress);
         if (r != 0)
         {
             throw new ColmapException(r);
@@ -135,8 +135,9 @@ public static class Colmap
         return new Reconstruction(images, cameras);
     }
 
-    [DllImport(Lib, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    static extern int colmapAutomaticReconstruction(string imagesDirectory, string workDirectory, int quality, string cameraModel, bool dense);
+    [LibraryImport(Lib, StringMarshalling = StringMarshalling.Custom, StringMarshallingCustomType = typeof(System.Runtime.InteropServices.Marshalling.AnsiStringMarshaller))]
+    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    private static unsafe partial int colmapAutomaticReconstruction(string imagesDirectory, string workDirectory, int quality, string cameraModel, [MarshalAs(UnmanagedType.Bool)] bool dense, delegate* unmanaged[Cdecl]<int, int, void> callback);
 }
 
 [Serializable]
