@@ -19,7 +19,7 @@ jobs:
         name: lib-ios
         path: lib
 
-  build-iossim:
+  build-iossimulator:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
@@ -31,9 +31,33 @@ jobs:
         name: lib-iossim
         path: lib
 
+  build-maccat:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: make
+      run: make -j $(sysctl -n hw.logicalcpu) lib/maccat/x86_64/libcolmap.dylib
+    - name: store
+      uses: actions/upload-artifact@v2
+      with:
+        name: lib-maccat
+        path: lib
+
+  build-mac:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: make
+      run: make -j $(sysctl -n hw.logicalcpu) lib/mac/x86_64/libcolmap.dylib
+    - name: store
+      uses: actions/upload-artifact@v2
+      with:
+        name: lib-mac
+        path: lib
+
   build-nuget:
     runs-on: macos-latest
-    needs: [build-ios, build-iossim]
+    needs: [build-ios, build-iossimulator, build-maccat, build-mac]
     steps:
     - uses: actions/checkout@v3
     - name: Update Versions
