@@ -86,7 +86,7 @@ clean:
 colmap-cli: $(CLI_SRC) lib/mac/x86_64/libcolmap.dylib Makefile
 	$(CXX) $(CXXFLAGS) -Llib/mac/x86_64 -lcolmap -o $@ $(CLI_SRC)
 
-nuget: Praeclarum.ColmapSharp.nuspec managed $(ASMS) $(LIBS)
+nuget: Praeclarum.ColmapSharp.nuspec $(ASMS)
 	nuget pack Praeclarum.ColmapSharp.nuspec -OutputDirectory NugetPackages
 
 managed: $(ASMS)
