@@ -26,11 +26,11 @@ int32_t colmapAutomaticReconstruction(const char *image_path, const char *worksp
         controller.Start();
         controller.Wait();
 
-        return reconstruction_manager.Size() == 1 ? 0 : 1;
+        return reconstruction_manager.Size() == 1 ? 0 : 2;
     }
     catch (runtime_error &ex) {
         fprintf(stderr, "Runtime error: %s\n", ex.what());
-        return 2;
+        return 1;
     }
 }
 
