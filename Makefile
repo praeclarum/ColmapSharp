@@ -30,6 +30,7 @@ CSSRC=$(wildcard ColmapSharp/*.cs)
 CXX=clang++
 CC=clang
 CFLAGS=-fPIC -O3 \
+	-Wno-deprecated-declarations \
 	-Icolmap-3.8/src -Icolmap-3.8/lib \
 	-Iceres-solver-2.1.0/include -Iceres-solver-2.1.0/internal/ceres/miniglog -Iceres-solver-2.1.0/internal \
 	-Iboost-1.64.0 -Ieigen-3.3.7 -Imetis-5.2.1/include \
